@@ -7,7 +7,12 @@ const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  partialPrefetching: true,
+  // Sengaja false: dengan true, proyek/artikel yang dibuat lewat admin (slug
+  // yang tidak ada saat build) pertama kali disajikan sebagai "App Shell"
+  // tanpa isi, dan <title>/metadata-nya tidak pernah terisi (teruji 27 Nov
+  // 2026, Next 16.4.6). Dengan false, request pertama menunggu render lengkap
+  // sehingga isi + metadata langsung benar (penting untuk SEO).
+  partialPrefetching: false,
   images: {
     // Gambar dari Supabase Storage (bucket publik `images`).
     remotePatterns: supabaseHost

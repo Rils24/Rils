@@ -3,8 +3,9 @@
 # Proyek
 
 - Spesifikasi: `PRD.md` (kerjakan per fase, berhenti di akhir tiap fase untuk konfirmasi). Data awal: `CONTENT.md`.
-- Status: Fase 1–4 selesai; Fase 5 (panel admin) sudah dibangun, menunggu akun admin untuk uji penuh. Berikutnya Fase 6 (finishing).
-- Next.js 16.4 dengan `cacheComponents` + `partialPrefetching`: middleware bernama `src/proxy.ts`; bahasa dibaca lewat `next/root-params` (`locale`) di `src/i18n/request.ts`, bukan `setRequestLocale`.
+- Status: Fase 1–5 selesai (panel admin teruji end-to-end dengan akun admin). Berikutnya Fase 6 (finishing).
+- Next.js 16.4 dengan `cacheComponents`; `partialPrefetching` sengaja `false` (dengan `true`, slug baru dari admin tidak dapat isi/metadata di request pertama — lihat komentar di `next.config.ts`). Middleware bernama `src/proxy.ts`; bahasa dibaca lewat `next/root-params` (`locale`) di `src/i18n/request.ts`, bukan `setRequestLocale`.
+- `requireAdmin()` memanggil `connection()` dulu agar halaman admin tidak di-prerender (Supabase membaca `Date.now()`).
 - `/admin` di luar `[locale]` (root layout sendiri, UI bahasa Indonesia). `src/proxy.ts` mengarahkan `/admin*` ke `updateAdminSession` (refresh sesi Supabase + redirect ke login), selain itu ke next-intl.
 - Data publik: semua query di `src/lib/data.ts` memakai `"use cache"` + `cacheTag(<nama tabel>)` dan `createPublicClient()` (tanpa cookie). Admin memanggil `updateTag("<tabel>")` setelah menyimpan.
 - Panel admin: konten didefinisikan sekali di `src/lib/admin/entities.ts` (field, kolom, tag cache); skema Zod dibangun dari situ dan dipakai di browser + server. Route generik `/admin/[entity]`, `/new`, `/[id]`. Server action di `src/lib/admin/actions.ts` selalu `requireAdmin()` dulu. Upload langsung dari browser ke bucket `images`/`files`.
