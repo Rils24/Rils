@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "motion/react";
+import { m, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
@@ -23,7 +23,7 @@ export function Reveal({
   delay?: number;
 }) {
   return (
-    <motion.div
+    <m.div
       className={className}
       initial="hidden"
       whileInView="show"
@@ -32,7 +32,7 @@ export function Reveal({
       transition={{ delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -47,7 +47,7 @@ export function Stagger({
   step?: number;
 }) {
   return (
-    <motion.ul
+    <m.ul
       className={className}
       initial="hidden"
       whileInView="show"
@@ -55,7 +55,7 @@ export function Stagger({
       variants={{ hidden: {}, show: { transition: { staggerChildren: step } } }}
     >
       {children}
-    </motion.ul>
+    </m.ul>
   );
 }
 
@@ -67,8 +67,8 @@ export function StaggerItem({
   className?: string;
 }) {
   return (
-    <motion.li className={className} variants={item}>
+    <m.li className={className} variants={item}>
       {children}
-    </motion.li>
+    </m.li>
   );
 }

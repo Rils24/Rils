@@ -1,14 +1,23 @@
 import { Mail } from "lucide-react";
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ContactForm } from "@/components/contact-form";
 import { LinkedinIcon } from "@/components/icons/brand";
 import { Container } from "@/components/ui/container";
 import { getProfile } from "@/lib/data";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Metadata");
-  return { title: t("contactTitle"), description: t("contactDescription") };
+  const [t, locale] = await Promise.all([
+    getTranslations("Metadata"),
+    getLocale(),
+  ]);
+  return pageMetadata({
+    locale,
+    path: "/contact",
+    title: t("contactTitle"),
+    description: t("contactDescription"),
+  });
 }
 
 export default async function ContactPage() {

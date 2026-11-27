@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { m, useMotionValue, useSpring } from "motion/react";
 import { useEffect, useState } from "react";
 import { usePointerEffects } from "./hooks";
 
@@ -42,7 +42,7 @@ export function CustomCursor() {
   if (!enabled) return null;
 
   return (
-    <motion.div
+    <m.div
       aria-hidden="true"
       className="pointer-events-none fixed top-0 left-0 z-[100] -mt-4 -ml-4 size-8 rounded-full border border-accent"
       style={{ x: springX, y: springY }}

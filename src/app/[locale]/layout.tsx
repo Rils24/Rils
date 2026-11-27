@@ -10,6 +10,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "../fonts";
 import { getProfile } from "@/lib/data";
+import { siteUrl } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/next";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -22,9 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     getProfile(),
   ]);
   return {
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-    ),
+    metadataBase: new URL(siteUrl()),
     title: {
       default: t("title"),
       template: `%s — ${profile?.name ?? "Syahril Aprialsyah"}`,
@@ -68,6 +68,8 @@ export default async function LocaleLayout({
               </main>
               <Footer />
             </MotionProvider>
+            {/* Hanya aktif di Vercel; di lokal script-nya tidak ada (404). */}
+            {process.env.VERCEL ? <Analytics /> : null}
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

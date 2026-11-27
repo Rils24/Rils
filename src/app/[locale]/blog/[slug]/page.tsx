@@ -1,5 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata, siteUrl } from "@/lib/seo";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Markdown } from "@/components/markdown";
@@ -8,7 +10,7 @@ import { Container } from "@/components/ui/container";
 import { CoverImage } from "@/components/ui/cover-image";
 import { Link } from "@/i18n/navigation";
 import { localized, readingMinutes } from "@/lib/content";
-import { getPost, getPosts } from "@/lib/data";
+import { getPost, getPosts, getProfile } from "@/lib/data";
 
 export async function generateStaticParams() {
   const posts = await getPosts();
@@ -22,11 +24,15 @@ export async function generateMetadata({
   const [{ slug }, locale] = await Promise.all([params, getLocale()]);
   const post = await getPost(slug);
   if (!post) return {};
-  return {
+  return pageMetadata({
+    locale,
+    path: `/blog/${post.slug}`,
     title: localized(locale, post.title_id, post.title_en),
-    description:
-      localized(locale, post.excerpt_id, post.excerpt_en) ?? undefined,
-  };
+    description: localized(locale, post.excerpt_id, post.excerpt_en),
+    type: "article",
+    publishedTime: post.published_at,
+    modifiedTime: post.updated_at,
+  });
 }
 
 export default async function PostPage({
@@ -45,11 +51,29 @@ export default async function PostPage({
   const title = localized(locale, post.title_id, post.title_en);
   const excerpt = localized(locale, post.excerpt_id, post.excerpt_en);
   const content = localized(locale, post.content_id, post.content_en);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  const url = `${siteUrl}/${locale}/blog/${post.slug}`;
+  const url = `${siteUrl()}/${locale}/blog/${post.slug}`;
+  const profile = await getProfile();
+  const postSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    ...(excerpt ? { description: excerpt } : {}),
+    url,
+    mainEntityOfPage: url,
+    inLanguage: locale,
+    ...(post.published_at ? { datePublished: post.published_at } : {}),
+    dateModified: post.updated_at,
+    image: post.cover_url ?? `${url}/opengraph-image`,
+    author: {
+      "@type": "Person",
+      name: profile?.name ?? "Syahril Aprialsyah",
+      url: siteUrl(),
+    },
+  };
 
   return (
     <article className="pt-28 pb-20 md:pt-36 md:pb-28">
+      <JsonLd data={postSchema} />
       <Container size="narrow">
         <Link
           href="/blog"

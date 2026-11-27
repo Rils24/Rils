@@ -2,12 +2,11 @@ import { Download, MapPin } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import {
-  HeroFade,
-  HeroName,
   HeroParallax,
   HeroPhoto,
   HeroRoles,
 } from "@/components/motion/hero-motion";
+import { HeroName, LETTER_STEP, NAME_START } from "./hero-name";
 import { Magnetic } from "@/components/motion/magnetic";
 import { buttonClass } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -17,7 +16,7 @@ import type { Profile } from "@/lib/data";
 
 /** Waktu (detik) saat animasi per huruf nama selesai; bagian lain menyusul. */
 function nameRevealEnd(name: string) {
-  return 0.15 + name.replace(/\s/g, "").length * 0.035 + 0.2;
+  return NAME_START + name.replace(/\s/g, "").length * LETTER_STEP + 0.2;
 }
 
 export async function Hero({ profile }: { profile: Profile }) {
@@ -45,12 +44,10 @@ export async function Hero({ profile }: { profile: Profile }) {
       <HeroParallax targetId="hero" />
       <Container>
         {location && (
-          <HeroFade delay={0.05}>
-            <p className="flex items-center gap-2 text-sm text-muted">
-              <MapPin aria-hidden="true" className="size-4 text-accent" />
-              {location}
-            </p>
-          </HeroFade>
+          <p className="flex items-center gap-2 text-sm text-muted motion-safe:animate-fade-up">
+            <MapPin aria-hidden="true" className="size-4 text-accent" />
+            {location}
+          </p>
         )}
 
         {/* Nama besar sebagai lapisan belakang; foto berada di lapisan depan.
@@ -73,11 +70,9 @@ export async function Hero({ profile }: { profile: Profile }) {
         </div>
 
         <div className="mt-10 grid gap-10 lg:mt-0 lg:grid-cols-12 lg:items-end">
-          {/* Mulai sebelum nama selesai agar teks bio (kandidat LCP) cepat tampil. */}
-          <HeroFade
-            delay={Math.min(after, 0.6)}
-            className="lg:col-span-6 lg:pt-16"
-          >
+          {/* Fade lewat CSS (bukan JS) agar bio, elemen LCP di HP, tampil
+              tanpa menunggu hydration. */}
+          <div className="motion-safe:animate-fade-up motion-safe:[animation-delay:350ms] lg:col-span-6 lg:pt-16">
             {roles.length > 0 && (
               <HeroRoles roles={roles} label={t("roles")} startDelay={after} />
             )}
@@ -102,7 +97,7 @@ export async function Hero({ profile }: { profile: Profile }) {
                 </Magnetic>
               )}
             </div>
-          </HeroFade>
+          </div>
 
           <div
             data-parallax="photo"

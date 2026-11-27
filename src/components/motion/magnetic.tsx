@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { m, useMotionValue, useSpring } from "motion/react";
 import type { PointerEvent, ReactNode } from "react";
 import { usePointerEffects } from "./hooks";
 
@@ -36,13 +36,13 @@ export function Magnetic({
   }
 
   return (
-    <motion.span
+    <m.span
       className={className}
       style={{ x: springX, y: springY }}
       onPointerMove={onMove}
       onPointerLeave={reset}
     >
       {children}
-    </motion.span>
+    </m.span>
   );
 }

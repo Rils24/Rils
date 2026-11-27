@@ -1,6 +1,6 @@
 "use client";
 
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { useEffect } from "react";
 
 let instance: Lenis | null = null;
@@ -13,18 +13,27 @@ export function getLenis() {
 /**
  * Smooth scroll global (Lenis). Lenis otomatis mematikan smoothing bila
  * pengguna memilih prefers-reduced-motion. Link anchor (#about) ikut halus.
+ * Library di-import dinamis agar tidak masuk bundle awal halaman.
  */
 export function SmoothScroll() {
   useEffect(() => {
-    const lenis = new Lenis({
-      autoRaf: true,
-      anchors: { offset: -88 },
-      lerp: 0.12,
-      stopInertiaOnNavigate: true,
+    let lenis: Lenis | null = null;
+    let cancelled = false;
+
+    import("lenis").then(({ default: LenisClass }) => {
+      if (cancelled) return;
+      lenis = new LenisClass({
+        autoRaf: true,
+        anchors: { offset: -88 },
+        lerp: 0.12,
+        stopInertiaOnNavigate: true,
+      });
+      instance = lenis;
     });
-    instance = lenis;
+
     return () => {
-      lenis.destroy();
+      cancelled = true;
+      lenis?.destroy();
       instance = null;
     };
   }, []);

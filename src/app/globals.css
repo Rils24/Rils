@@ -52,6 +52,45 @@
   --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-inter);
   --font-display: var(--font-space-grotesk);
+  /* Animasi masuk di hero dibuat dengan CSS (bukan JS) agar tampil sejak cat
+     pertama tanpa menunggu hydration — penting untuk LCP di HP. */
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-letter-up: letter-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-mask-up: mask-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-settle: settle 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes letter-up {
+    from {
+      opacity: 0;
+      transform: translateY(105%);
+    }
+  }
+  @keyframes mask-up {
+    from {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes settle {
+    from {
+      transform: scale(1.15);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
 
 /* Lenis (smooth scroll), disalin dari lenis/dist/lenis.css. */

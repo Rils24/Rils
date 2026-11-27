@@ -1,78 +1,9 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { m, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePointerEffects, usePrefersReducedMotion } from "./hooks";
 import { getLenis } from "./smooth-scroll";
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
-const LETTER_STEP = 0.035;
-
-/* -------------------------------------------------------------------------- */
-/* Nama: muncul per huruf dari bawah garis                                    */
-/* -------------------------------------------------------------------------- */
-
-export function HeroName({
-  lines,
-}: {
-  lines: { text: string; className?: string }[];
-}) {
-  let index = 0;
-  return (
-    <>
-      <span className="sr-only">{lines.map((l) => l.text).join(" ")}</span>
-      <span aria-hidden="true" className="block">
-        {lines.map((line) => (
-          // Padding bawah agar ekor huruf (y, p) tidak terpotong mask.
-          <span
-            key={line.text}
-            className={`-mb-[0.14em] block overflow-hidden pb-[0.14em] ${line.className ?? ""}`}
-          >
-            {Array.from(line.text).map((char, i) => {
-              const delay = 0.15 + index++ * LETTER_STEP;
-              return (
-                <motion.span
-                  key={`${char}-${i}`}
-                  className="inline-block will-change-transform"
-                  initial={{ y: "105%", opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.7, ease: EASE_OUT, delay }}
-                >
-                  {char === " " ? " " : char}
-                </motion.span>
-              );
-            })}
-          </span>
-        ))}
-      </span>
-    </>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Fade-in sederhana yang menyusul nama                                       */
-/* -------------------------------------------------------------------------- */
-
-export function HeroFade({
-  children,
-  delay,
-  className,
-}: {
-  children: ReactNode;
-  delay: number;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: EASE_OUT, delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 /* -------------------------------------------------------------------------- */
 /* Jabatan: efek mengetik bergantian                                          */
@@ -168,7 +99,7 @@ export function HeroRoles({
         className="inline-flex min-h-[1.3em] items-center"
       >
         {state.text}
-        <motion.span
+        <m.span
           className="ml-1 inline-block h-[1em] w-[3px] rounded-full bg-accent"
           animate={{ opacity: [1, 1, 0, 0] }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -235,29 +166,26 @@ export function HeroPhoto({
   return (
     <div ref={ref} className="relative">
       <HeroBlob />
-      <motion.div
+      <m.div
         style={{ rotateX, rotateY, transformPerspective: 1000 }}
         className="relative"
       >
-        {/* Mask: isi bergerak naik dari bawah ke dalam bingkai. */}
+        {/* Mask: isi naik dari bawah ke dalam bingkai (CSS, tanpa menunggu JS,
+            agar foto sebagai kandidat LCP tetap cepat tampil). */}
         <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-surface-2">
-          <motion.div
-            className="absolute inset-0"
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, ease: EASE_OUT, delay }}
+          <div
+            className="absolute inset-0 motion-safe:animate-mask-up motion-reduce:animate-fade-in"
+            style={{ animationDelay: `${delay}s` }}
           >
-            <motion.div
-              className="absolute inset-0"
-              initial={{ scale: 1.15 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.8, ease: EASE_OUT, delay }}
+            <div
+              className="absolute inset-0 motion-safe:animate-settle"
+              style={{ animationDelay: `${delay}s` }}
             >
               {children}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -268,7 +196,7 @@ function HeroBlob() {
       aria-hidden="true"
       className="pointer-events-none absolute -inset-10 -z-10"
     >
-      <motion.div
+      <m.div
         className="absolute top-0 right-0 size-3/4 rounded-full bg-[radial-gradient(circle,var(--accent)_0%,transparent_65%)] opacity-25 blur-2xl dark:opacity-20"
         animate={{
           x: [0, -30, 10, 0],
@@ -277,7 +205,7 @@ function HeroBlob() {
         }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
+      <m.div
         className="absolute bottom-0 left-0 size-2/3 rounded-full bg-[radial-gradient(circle,var(--muted)_0%,transparent_65%)] opacity-20 blur-2xl"
         animate={{
           x: [0, 25, -15, 0],

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ProjectCard, type ProjectCardData } from "@/components/project-card";
@@ -50,11 +50,11 @@ export function ProjectFilter({
       )}
 
       {visible.length > 0 ? (
-        <motion.ul layout className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <m.ul layout className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {/* Animasi layout: kartu bergeser ke posisi baru saat filter diganti. */}
           <AnimatePresence mode="popLayout" initial={false}>
             {visible.map((project) => (
-              <motion.li
+              <m.li
                 key={project.slug}
                 layout
                 initial={{ opacity: 0, scale: 0.96 }}
@@ -67,10 +67,10 @@ export function ProjectFilter({
                   placeholder={common("imageComingSoon")}
                   headingLevel="h2"
                 />
-              </motion.li>
+              </m.li>
             ))}
           </AnimatePresence>
-        </motion.ul>
+        </m.ul>
       ) : (
         <p className="text-muted">{t("empty")}</p>
       )}

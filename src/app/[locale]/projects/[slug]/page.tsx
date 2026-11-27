@@ -1,5 +1,7 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata, siteUrl } from "@/lib/seo";
 import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { GithubIcon } from "@/components/icons/brand";
@@ -9,7 +11,7 @@ import { Container } from "@/components/ui/container";
 import { CoverImage } from "@/components/ui/cover-image";
 import { Link } from "@/i18n/navigation";
 import { localized } from "@/lib/content";
-import { getProject, getProjects } from "@/lib/data";
+import { getProfile, getProject, getProjects } from "@/lib/data";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -25,10 +27,12 @@ export async function generateMetadata({
   const [{ slug }, locale] = await Promise.all([params, getLocale()]);
   const project = await getProject(slug);
   if (!project) return {};
-  return {
+  return pageMetadata({
+    locale,
+    path: `/projects/${project.slug}`,
     title: localized(locale, project.title_id, project.title_en),
     description: localized(locale, project.summary_id, project.summary_en),
-  };
+  });
 }
 
 export default async function ProjectPage({
@@ -53,6 +57,25 @@ export default async function ProjectPage({
     ? localized(locale, project.category.name_id, project.category.name_en)
     : null;
   const others = all.filter((p) => p.slug !== project.slug).slice(0, 3);
+  const profile = await getProfile();
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: title,
+    description: summary,
+    url: `${siteUrl()}/${locale}/projects/${project.slug}`,
+    inLanguage: locale,
+    ...(project.thumbnail_url ? { image: project.thumbnail_url } : {}),
+    ...(project.tech_stack.length
+      ? { keywords: project.tech_stack.join(", ") }
+      : {}),
+    ...(category ? { genre: category } : {}),
+    author: {
+      "@type": "Person",
+      name: profile?.name ?? "Syahril Aprialsyah",
+      url: siteUrl(),
+    },
+  };
 
   const caseStudy = [
     { label: t("problem"), body: problem },
@@ -61,6 +84,7 @@ export default async function ProjectPage({
 
   return (
     <article className="pt-28 pb-20 md:pt-36 md:pb-28">
+      <JsonLd data={projectSchema} />
       <Container>
         <Link
           href="/projects"

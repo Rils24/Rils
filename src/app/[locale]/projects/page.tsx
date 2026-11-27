@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { getLocale, getTranslations } from "next-intl/server";
 import { toProjectCard } from "@/components/project-card";
 import { ProjectFilter } from "@/components/project-filter";
@@ -8,8 +9,16 @@ import { localized } from "@/lib/content";
 import { getCategories, getProjects } from "@/lib/data";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Metadata");
-  return { title: t("projectsTitle"), description: t("projectsDescription") };
+  const [t, locale] = await Promise.all([
+    getTranslations("Metadata"),
+    getLocale(),
+  ]);
+  return pageMetadata({
+    locale,
+    path: "/projects",
+    title: t("projectsTitle"),
+    description: t("projectsDescription"),
+  });
 }
 
 export default async function ProjectsPage() {

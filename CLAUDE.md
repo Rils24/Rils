@@ -3,7 +3,9 @@
 # Proyek
 
 - Spesifikasi: `PRD.md` (kerjakan per fase, berhenti di akhir tiap fase untuk konfirmasi). Data awal: `CONTENT.md`.
-- Status: Fase 1–5 selesai (panel admin teruji end-to-end dengan akun admin). Berikutnya Fase 6 (finishing).
+- Status: Fase 1–6 selesai di kode. Tersisa: deploy Vercel, konten asli (foto, CV, GitHub/IG, tech stack), domain.
+- SEO: `pageMetadata()` di `src/lib/seo.ts` untuk setiap halaman publik (canonical + hreflang + OG); `siteUrl()` memakai NEXT_PUBLIC_SITE_URL → VERCEL_PROJECT_PRODUCTION_URL → localhost. Gambar OG via `opengraph-image.tsx` + `src/lib/og.tsx`.
+- Performa: animasi masuk di atas lipatan (huruf nama, mask foto, bio, h1 halaman daftar) memakai keyframe CSS di `globals.css`, BUKAN motion/JS, agar LCP tidak menunggu hydration. Motion dipakai lewat `LazyMotion` + komponen `m.*` (strict). Lenis di-import dinamis.
 - Next.js 16.4 dengan `cacheComponents`; `partialPrefetching` sengaja `false` (dengan `true`, slug baru dari admin tidak dapat isi/metadata di request pertama — lihat komentar di `next.config.ts`). Middleware bernama `src/proxy.ts`; bahasa dibaca lewat `next/root-params` (`locale`) di `src/i18n/request.ts`, bukan `setRequestLocale`.
 - `requireAdmin()` memanggil `connection()` dulu agar halaman admin tidak di-prerender (Supabase membaca `Date.now()`).
 - `/admin` di luar `[locale]` (root layout sendiri, UI bahasa Indonesia). `src/proxy.ts` mengarahkan `/admin*` ke `updateAdminSession` (refresh sesi Supabase + redirect ke login), selain itu ke next-intl.

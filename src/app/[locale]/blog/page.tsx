@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
+import { getLocale, getTranslations } from "next-intl/server";
 import { PostCard } from "@/components/post-card";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
 import { getPosts } from "@/lib/data";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Metadata");
-  return { title: t("blogTitle"), description: t("blogDescription") };
+  const [t, locale] = await Promise.all([
+    getTranslations("Metadata"),
+    getLocale(),
+  ]);
+  return pageMetadata({
+    locale,
+    path: "/blog",
+    title: t("blogTitle"),
+    description: t("blogDescription"),
+  });
 }
 
 export default async function BlogPage() {
