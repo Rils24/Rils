@@ -1,0 +1,25 @@
+{
+  "Metadata": {
+    "title": "Syahril Aprialsyah — Web Developer",
+    "description": "Portofolio Syahril Aprialsyah, web developer dari Padang yang membangun sistem informasi."
+  },
+  "Common": {
+    "toggleTheme": "Ganti tema",
+    "themeLight": "Terang",
+    "themeDark": "Gelap",
+    "switchLanguage": "Ganti bahasa",
+    "skipToContent": "Lewati ke konten"
+  },
+  "Setup": {
+    "heading": "Fase 1 selesai: fondasi proyek",
+    "intro": "Halaman sementara untuk mengecek setup. Akan diganti halaman Home di Fase 3.",
+    "checks": "Pemeriksaan",
+    "locale": "Bahasa aktif",
+    "theme": "Tema",
+    "supabase": "Supabase",
+    "supabaseOk": "Terhubung",
+    "supabaseMissing": "Belum dikonfigurasi (isi .env.local)",
+    "supabaseError": "Gagal terhubung",
+    "checking": "Memeriksa…"
+  }
+}

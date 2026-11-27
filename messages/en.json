@@ -1,0 +1,25 @@
+{
+  "Metadata": {
+    "title": "Syahril Aprialsyah — Web Developer",
+    "description": "Portfolio of Syahril Aprialsyah, a web developer from Padang building information systems."
+  },
+  "Common": {
+    "toggleTheme": "Toggle theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "switchLanguage": "Switch language",
+    "skipToContent": "Skip to content"
+  },
+  "Setup": {
+    "heading": "Phase 1 done: project foundation",
+    "intro": "Temporary page to verify the setup. It will be replaced by the Home page in Phase 3.",
+    "checks": "Checks",
+    "locale": "Active language",
+    "theme": "Theme",
+    "supabase": "Supabase",
+    "supabaseOk": "Connected",
+    "supabaseMissing": "Not configured (fill in .env.local)",
+    "supabaseError": "Connection failed",
+    "checking": "Checking…"
+  }
+}

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Dark mode mengikuti class `.dark` di <html> yang diatur next-themes. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f7f7f8;
+  --surface: #ffffff;
+  --foreground: #111114;
+  --muted: #5b5b66;
+  --border: #e4e4e7;
+  /* Aksen merah. `accent` untuk sorotan/elemen besar; `accent-strong` untuk
+     teks kecil dan tombol berteks putih agar kontras lolos WCAG AA di tema terang. */
+  --accent: #e63946;
+  --accent-strong: #c92a37;
+  --accent-foreground: #ffffff;
+}
+
+.dark {
+  --background: #0f0f12;
+  --surface: #18181d;
+  --foreground: #f2f2f4;
+  --muted: #a1a1aa;
+  --border: #2a2a31;
+  --accent: #e63946;
+  --accent-strong: #e63946;
+  --accent-foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-foreground: var(--accent-foreground);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
