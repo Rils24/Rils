@@ -1,25 +1,136 @@
 {
   "Metadata": {
     "title": "Syahril Aprialsyah — Web Developer",
-    "description": "Portfolio of Syahril Aprialsyah, a web developer from Padang building information systems."
+    "description": "Portfolio of Syahril Aprialsyah, a web developer from Padang building information systems.",
+    "projectsTitle": "Projects",
+    "projectsDescription": "Case studies of information systems and web applications built by Syahril Aprialsyah.",
+    "blogTitle": "Blog",
+    "blogDescription": "Writing about web development and information systems.",
+    "contactTitle": "Contact",
+    "contactDescription": "Get in touch with Syahril Aprialsyah about a web app or information system project."
   },
   "Common": {
     "toggleTheme": "Toggle theme",
     "themeLight": "Light",
     "themeDark": "Dark",
     "switchLanguage": "Switch language",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "imageComingSoon": "Image coming soon",
+    "photoComingSoon": "Photo coming soon",
+    "present": "Present"
   },
-  "Setup": {
-    "heading": "Phase 1 done: project foundation",
-    "intro": "Temporary page to verify the setup. It will be replaced by the Home page in Phase 3.",
-    "checks": "Checks",
-    "locale": "Active language",
-    "theme": "Theme",
-    "supabase": "Supabase",
-    "supabaseOk": "Connected",
-    "supabaseMissing": "Not configured (fill in .env.local)",
-    "supabaseError": "Connection failed",
-    "checking": "Checking…"
+  "Nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact",
+    "hireMe": "Hire Me",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Hero": {
+    "contact": "Get in touch",
+    "downloadCv": "Download CV",
+    "roles": "Roles"
+  },
+  "About": {
+    "title": "About me",
+    "skills": "Skills",
+    "groups": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "database": "Database",
+      "other": "Other"
+    }
+  },
+  "Services": {
+    "title": "What I can do for you",
+    "intro": "From gathering requirements to an app your team can actually use."
+  },
+  "Projects": {
+    "title": "Projects",
+    "featured": "Selected projects",
+    "intro": "Systems I built with a language center, an Islamic boarding school, and a government agency.",
+    "viewAll": "View all projects",
+    "filterLabel": "Filter by category",
+    "all": "All",
+    "empty": "No projects in this category yet.",
+    "caseStudy": "View case study"
+  },
+  "Project": {
+    "back": "All projects",
+    "role": "Role",
+    "category": "Category",
+    "stack": "Tech stack",
+    "links": "Links",
+    "demo": "Live demo",
+    "source": "Source code",
+    "problem": "Problem",
+    "solution": "Solution",
+    "gallery": "Gallery",
+    "galleryImage": "Image {number} of {title}",
+    "others": "More projects",
+    "pending": "Case study details are being written."
+  },
+  "Experience": {
+    "title": "Experience",
+    "work": "Work",
+    "education": "Education",
+    "certifications": "Certifications",
+    "credential": "View credential"
+  },
+  "Testimonials": {
+    "title": "What clients say"
+  },
+  "Blog": {
+    "title": "Blog",
+    "latest": "Latest writing",
+    "intro": "Notes from projects and things I learned while building systems.",
+    "viewAll": "All posts",
+    "readingTime": "{minutes} min read",
+    "empty": "No posts yet.",
+    "back": "All posts",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "copied": "Link copied"
+  },
+  "Cta": {
+    "title": "Have a system that needs building?",
+    "body": "Tell me about your workflow and what you need. We'll find the right shape for the app.",
+    "button": "Start a conversation"
+  },
+  "Contact": {
+    "title": "Let's talk about your project",
+    "intro": "Fill in the form below or email me directly. I read every message myself.",
+    "direct": "Direct contact",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "honeypot": "Leave this field empty",
+    "submit": "Send message",
+    "sending": "Sending…",
+    "success": "Message sent. Thank you, I'll get back to you soon.",
+    "errors": {
+      "nameMin": "Name must be at least 2 characters.",
+      "nameMax": "Name must be at most 120 characters.",
+      "emailInvalid": "Please enter a valid email address.",
+      "messageMin": "Message must be at least 10 characters.",
+      "messageMax": "Message must be at most 5,000 characters.",
+      "validation": "Please check the form fields.",
+      "rate_limited": "Too many messages in a short time. Please try again in a few minutes.",
+      "server": "The message couldn't be sent. Please try again, or email me directly."
+    }
+  },
+  "Footer": {
+    "tagline": "Building information systems that are tidy and easy to use.",
+    "rights": "All rights reserved.",
+    "social": "Social media"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for may have moved or never existed.",
+    "home": "Back to home",
+    "projects": "View projects"
   }
 }

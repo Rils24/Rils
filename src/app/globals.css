@@ -1,46 +1,77 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Dark mode mengikuti class `.dark` di <html> yang diatur next-themes. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Aksen merah dipecah tiga agar kontras lolos WCAG AA di kedua tema:
+ * - accent       : #E63946 untuk elemen dekoratif/besar (garis, titik, border)
+ * - accent-text  : teks merah kecil di atas latar/kartu
+ * - accent-solid : latar tombol berteks putih (5,4:1)
+ */
 :root {
   --background: #f7f7f8;
   --surface: #ffffff;
+  --surface-2: #ececef;
   --foreground: #111114;
   --muted: #5b5b66;
   --border: #e4e4e7;
-  /* Aksen merah. `accent` untuk sorotan/elemen besar; `accent-strong` untuk
-     teks kecil dan tombol berteks putih agar kontras lolos WCAG AA di tema terang. */
   --accent: #e63946;
-  --accent-strong: #c92a37;
+  --accent-text: #c92a37;
+  --accent-solid: #c92a37;
+  --accent-solid-hover: #ad1f2b;
   --accent-foreground: #ffffff;
 }
 
 .dark {
   --background: #0f0f12;
   --surface: #18181d;
+  --surface-2: #222228;
   --foreground: #f2f2f4;
   --muted: #a1a1aa;
   --border: #2a2a31;
   --accent: #e63946;
-  --accent-strong: #e63946;
+  --accent-text: #f0525e;
+  --accent-solid: #c92a37;
+  --accent-solid-hover: #d8323f;
   --accent-foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  --color-accent-strong: var(--accent-strong);
+  --color-accent-text: var(--accent-text);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-solid-hover: var(--accent-solid-hover);
   --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-inter);
   --font-display: var(--font-space-grotesk);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Anchor (#about, #experience) tidak tertutup navbar yang fixed. */
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    background: var(--accent-solid);
+    color: var(--accent-foreground);
+  }
 }

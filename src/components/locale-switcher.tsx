@@ -32,7 +32,7 @@ export function LocaleSwitcher() {
           aria-pressed={l === locale}
           disabled={isPending}
           onClick={() => switchTo(l)}
-          className="h-full rounded-lg px-3 text-muted uppercase transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:bg-accent-strong aria-pressed:text-accent-foreground"
+          className="h-full rounded-lg px-3 text-muted uppercase transition-colors hover:text-foreground aria-pressed:bg-accent-solid aria-pressed:text-accent-foreground"
         >
           {l}
         </button>

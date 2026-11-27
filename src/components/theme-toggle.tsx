@@ -23,7 +23,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={t("toggleTheme")}
       title={mounted ? (isDark ? t("themeDark") : t("themeLight")) : undefined}
-      className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground transition-colors hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground transition-colors hover:border-foreground/40"
     >
       <svg
         aria-hidden="true"

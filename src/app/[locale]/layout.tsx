@@ -4,8 +4,11 @@ import { getTranslations } from "next-intl/server";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { locale as rootLocale } from "next/root-params";
+import { Footer } from "@/components/site/footer";
+import { Navbar } from "@/components/site/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { routing } from "@/i18n/routing";
+import { getProfile } from "@/lib/data";
 import "../globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -19,12 +22,18 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Metadata");
+  const [t, profile] = await Promise.all([
+    getTranslations("Metadata"),
+    getProfile(),
+  ]);
   return {
     metadataBase: new URL(
       process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
     ),
-    title: t("title"),
+    title: {
+      default: t("title"),
+      template: `%s — ${profile?.name ?? "Syahril Aprialsyah"}`,
+    },
     description: t("description"),
   };
 }
@@ -46,7 +55,7 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col font-sans">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-accent-strong focus:px-4 focus:py-2 focus:text-accent-foreground"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-accent-solid focus:px-4 focus:py-2 focus:text-accent-foreground"
         >
           {t("skipToContent")}
         </a>
@@ -56,7 +65,13 @@ export default async function LocaleLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            <Navbar />
+            <main id="main" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

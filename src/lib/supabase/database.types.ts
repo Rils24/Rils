@@ -181,6 +181,7 @@ export type Database = {
           created_at: string;
           email: string;
           id: string;
+          ip_hash: string | null;
           is_read: boolean;
           message: string;
           name: string;
@@ -189,6 +190,7 @@ export type Database = {
           created_at?: string;
           email: string;
           id?: string;
+          ip_hash?: string | null;
           is_read?: boolean;
           message: string;
           name: string;
@@ -197,6 +199,7 @@ export type Database = {
           created_at?: string;
           email?: string;
           id?: string;
+          ip_hash?: string | null;
           is_read?: boolean;
           message?: string;
           name?: string;
@@ -514,6 +517,15 @@ export type Database = {
     };
     Functions: {
       is_admin: { Args: never; Returns: boolean };
+      submit_message: {
+        Args: {
+          p_email: string;
+          p_ip_hash?: string;
+          p_message: string;
+          p_name: string;
+        };
+        Returns: undefined;
+      };
     };
     Enums: {
       [_ in never]: never;

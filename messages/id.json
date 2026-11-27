@@ -1,25 +1,136 @@
 {
   "Metadata": {
     "title": "Syahril Aprialsyah — Web Developer",
-    "description": "Portofolio Syahril Aprialsyah, web developer dari Padang yang membangun sistem informasi."
+    "description": "Portofolio Syahril Aprialsyah, web developer dari Padang yang membangun sistem informasi.",
+    "projectsTitle": "Proyek",
+    "projectsDescription": "Studi kasus sistem informasi dan aplikasi web yang dibangun Syahril Aprialsyah.",
+    "blogTitle": "Blog",
+    "blogDescription": "Tulisan tentang pengembangan web dan sistem informasi.",
+    "contactTitle": "Kontak",
+    "contactDescription": "Hubungi Syahril Aprialsyah untuk proyek aplikasi web atau sistem informasi."
   },
   "Common": {
     "toggleTheme": "Ganti tema",
     "themeLight": "Terang",
     "themeDark": "Gelap",
     "switchLanguage": "Ganti bahasa",
-    "skipToContent": "Lewati ke konten"
+    "skipToContent": "Lewati ke konten",
+    "imageComingSoon": "Gambar menyusul",
+    "photoComingSoon": "Foto menyusul",
+    "present": "Sekarang"
   },
-  "Setup": {
-    "heading": "Fase 1 selesai: fondasi proyek",
-    "intro": "Halaman sementara untuk mengecek setup. Akan diganti halaman Home di Fase 3.",
-    "checks": "Pemeriksaan",
-    "locale": "Bahasa aktif",
-    "theme": "Tema",
-    "supabase": "Supabase",
-    "supabaseOk": "Terhubung",
-    "supabaseMissing": "Belum dikonfigurasi (isi .env.local)",
-    "supabaseError": "Gagal terhubung",
-    "checking": "Memeriksa…"
+  "Nav": {
+    "label": "Navigasi utama",
+    "home": "Beranda",
+    "projects": "Proyek",
+    "blog": "Blog",
+    "contact": "Kontak",
+    "hireMe": "Hire Me",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu"
+  },
+  "Hero": {
+    "contact": "Hubungi saya",
+    "downloadCv": "Unduh CV",
+    "roles": "Peran"
+  },
+  "About": {
+    "title": "Tentang saya",
+    "skills": "Keahlian",
+    "groups": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "database": "Database",
+      "other": "Lainnya"
+    }
+  },
+  "Services": {
+    "title": "Yang bisa saya kerjakan",
+    "intro": "Dari menggali kebutuhan sampai aplikasi siap dipakai tim Anda."
+  },
+  "Projects": {
+    "title": "Proyek",
+    "featured": "Proyek pilihan",
+    "intro": "Sistem yang saya bangun bersama lembaga kursus, pondok pesantren, dan instansi pemerintah.",
+    "viewAll": "Lihat semua proyek",
+    "filterLabel": "Filter kategori",
+    "all": "Semua",
+    "empty": "Belum ada proyek di kategori ini.",
+    "caseStudy": "Lihat studi kasus"
+  },
+  "Project": {
+    "back": "Semua proyek",
+    "role": "Peran",
+    "category": "Kategori",
+    "stack": "Teknologi",
+    "links": "Tautan",
+    "demo": "Lihat demo",
+    "source": "Kode sumber",
+    "problem": "Masalah",
+    "solution": "Solusi",
+    "gallery": "Galeri",
+    "galleryImage": "Gambar {number} dari {title}",
+    "others": "Proyek lainnya",
+    "pending": "Detail studi kasus sedang dilengkapi."
+  },
+  "Experience": {
+    "title": "Pengalaman",
+    "work": "Pekerjaan",
+    "education": "Pendidikan",
+    "certifications": "Sertifikat",
+    "credential": "Lihat sertifikat"
+  },
+  "Testimonials": {
+    "title": "Kata klien"
+  },
+  "Blog": {
+    "title": "Blog",
+    "latest": "Tulisan terbaru",
+    "intro": "Catatan dari proyek dan hal-hal yang saya pelajari selama membangun sistem.",
+    "viewAll": "Semua tulisan",
+    "readingTime": "{minutes} menit baca",
+    "empty": "Belum ada tulisan.",
+    "back": "Semua tulisan",
+    "share": "Bagikan",
+    "copyLink": "Salin tautan",
+    "copied": "Tautan disalin"
+  },
+  "Cta": {
+    "title": "Punya sistem yang perlu dibangun?",
+    "body": "Ceritakan alur kerja dan kebutuhan Anda. Kita cari bentuk aplikasi yang paling pas.",
+    "button": "Mulai diskusi"
+  },
+  "Contact": {
+    "title": "Mari bicara tentang proyek Anda",
+    "intro": "Isi form di bawah atau kirim email langsung. Semua pesan saya baca sendiri.",
+    "direct": "Kontak langsung",
+    "name": "Nama",
+    "email": "Email",
+    "message": "Pesan",
+    "honeypot": "Jangan isi kolom ini",
+    "submit": "Kirim pesan",
+    "sending": "Mengirim…",
+    "success": "Pesan terkirim. Terima kasih, saya akan segera membalas.",
+    "errors": {
+      "nameMin": "Nama minimal 2 karakter.",
+      "nameMax": "Nama maksimal 120 karakter.",
+      "emailInvalid": "Format email belum benar.",
+      "messageMin": "Pesan minimal 10 karakter.",
+      "messageMax": "Pesan maksimal 5.000 karakter.",
+      "validation": "Periksa lagi isian form.",
+      "rate_limited": "Terlalu banyak pesan dalam waktu singkat. Coba lagi beberapa menit lagi.",
+      "server": "Pesan gagal terkirim. Coba lagi, atau kirim email langsung."
+    }
+  },
+  "Footer": {
+    "tagline": "Membangun sistem informasi yang rapi dan mudah dipakai.",
+    "rights": "Hak cipta dilindungi.",
+    "social": "Media sosial"
+  },
+  "NotFound": {
+    "title": "Halaman tidak ditemukan",
+    "body": "Halaman yang Anda cari mungkin sudah dipindah atau tidak pernah ada.",
+    "home": "Kembali ke beranda",
+    "projects": "Lihat proyek"
   }
 }
