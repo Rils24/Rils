@@ -3,10 +3,12 @@
 # Proyek
 
 - Spesifikasi: `PRD.md` (kerjakan per fase, berhenti di akhir tiap fase untuk konfirmasi). Data awal: `CONTENT.md`.
-- Status: Fase 1–4 selesai (setup, database, halaman publik, animasi). Berikutnya Fase 5 (Panel admin).
+- Status: Fase 1–4 selesai; Fase 5 (panel admin) sudah dibangun, menunggu akun admin untuk uji penuh. Berikutnya Fase 6 (finishing).
 - Next.js 16.4 dengan `cacheComponents` + `partialPrefetching`: middleware bernama `src/proxy.ts`; bahasa dibaca lewat `next/root-params` (`locale`) di `src/i18n/request.ts`, bukan `setRequestLocale`.
-- `/admin` di luar `[locale]` dan dikecualikan dari matcher proxy.
-- Data publik: semua query di `src/lib/data.ts` memakai `"use cache"` + `cacheTag(<nama tabel>)` dan `createPublicClient()` (tanpa cookie). Admin (Fase 5) cukup `revalidateTag("<tabel>")` setelah menyimpan. Fitur admin pakai `src/lib/supabase/server.ts`.
+- `/admin` di luar `[locale]` (root layout sendiri, UI bahasa Indonesia). `src/proxy.ts` mengarahkan `/admin*` ke `updateAdminSession` (refresh sesi Supabase + redirect ke login), selain itu ke next-intl.
+- Data publik: semua query di `src/lib/data.ts` memakai `"use cache"` + `cacheTag(<nama tabel>)` dan `createPublicClient()` (tanpa cookie). Admin memanggil `updateTag("<tabel>")` setelah menyimpan.
+- Panel admin: konten didefinisikan sekali di `src/lib/admin/entities.ts` (field, kolom, tag cache); skema Zod dibangun dari situ dan dipakai di browser + server. Route generik `/admin/[entity]`, `/new`, `/[id]`. Server action di `src/lib/admin/actions.ts` selalu `requireAdmin()` dulu. Upload langsung dari browser ke bucket `images`/`files`.
+- Admin = baris di `admin_users`: `npx supabase db query --remote "insert into public.admin_users (user_id) select id from auth.users where email = '<email>'"`. `is_admin()` adalah SECURITY INVOKER, hanya untuk role authenticated.
 - Pilih bahasa konten dengan `localized(locale, row.x_id, row.x_en)` dari `src/lib/content.ts` (fallback ke `_id`).
 - Halaman `[slug]`: `generateStaticParams` wajib mengembalikan minimal satu param (aturan Cache Components); bila kosong dipakai `"_"` yang berujung 404.
 - Warna (`src/app/globals.css`): `accent` untuk dekorasi, `accent-text` untuk teks merah, `accent-solid` untuk tombol berteks putih (kontras AA di kedua tema). Kelas tombol lewat `buttonClass()`.

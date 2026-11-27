@@ -6,8 +6,16 @@ import { useSyncExternalStore } from "react";
 
 const subscribe = () => () => {};
 
-export function ThemeToggle() {
-  const t = useTranslations("Common");
+/** Tombol tema tanpa next-intl (dipakai juga di panel admin). */
+export function ThemeToggleButton({
+  label,
+  lightLabel,
+  darkLabel,
+}: {
+  label: string;
+  lightLabel: string;
+  darkLabel: string;
+}) {
   const { resolvedTheme, setTheme } = useTheme();
   // Tema baru diketahui setelah hydration; sebelum itu render ikon netral.
   const mounted = useSyncExternalStore(
@@ -21,8 +29,8 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      aria-label={t("toggleTheme")}
-      title={mounted ? (isDark ? t("themeDark") : t("themeLight")) : undefined}
+      aria-label={label}
+      title={mounted ? (isDark ? darkLabel : lightLabel) : undefined}
       className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground transition-colors hover:border-foreground/40"
     >
       <svg
@@ -45,5 +53,16 @@ export function ThemeToggle() {
         )}
       </svg>
     </button>
+  );
+}
+
+export function ThemeToggle() {
+  const t = useTranslations("Common");
+  return (
+    <ThemeToggleButton
+      label={t("toggleTheme")}
+      lightLabel={t("themeLight")}
+      darkLabel={t("themeDark")}
+    />
   );
 }
