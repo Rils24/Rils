@@ -11,8 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "db:link": "supabase link --project-ref etucxdsgsovgkehjquwy",
-    "db:push": "supabase db push --include-seed",
-    "db:types": "supabase gen types typescript --linked --schema public > src/lib/supabase/database.types.ts"
+    "db:push": "supabase db push --remote --include-seed",
+    "db:types": "supabase gen types typescript --remote --schema public > src/lib/supabase/database.types.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

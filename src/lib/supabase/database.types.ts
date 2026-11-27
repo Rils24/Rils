@@ -1,5 +1,3 @@
-// Tipe database Supabase (skema public).
-// Regenerasi setelah skema berubah: npm run db:types
 export type Json =
   | string
   | number
@@ -9,385 +7,390 @@ export type Json =
   | Json[];
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "17.1";
+  };
   public: {
     Tables: {
       admin_users: {
         Row: {
-          user_id: string;
           created_at: string;
+          user_id: string;
         };
         Insert: {
-          user_id: string;
           created_at?: string;
+          user_id: string;
         };
         Update: {
-          user_id?: string;
           created_at?: string;
+          user_id?: string;
         };
         Relationships: [];
       };
       categories: {
         Row: {
+          created_at: string;
           id: string;
-          name_id: string;
           name_en: string | null;
+          name_id: string;
           slug: string;
           sort_order: number;
-          created_at: string;
           updated_at: string;
         };
         Insert: {
+          created_at?: string;
           id?: string;
-          name_id: string;
           name_en?: string | null;
+          name_id: string;
           slug: string;
           sort_order?: number;
-          created_at?: string;
           updated_at?: string;
         };
         Update: {
+          created_at?: string;
           id?: string;
-          name_id?: string;
           name_en?: string | null;
+          name_id?: string;
           slug?: string;
           sort_order?: number;
-          created_at?: string;
           updated_at?: string;
         };
         Relationships: [];
       };
       certifications: {
         Row: {
-          id: string;
-          name: string;
-          issuer: string | null;
-          issued_at: string | null;
-          credential_url: string | null;
-          sort_order: number;
           created_at: string;
+          credential_url: string | null;
+          id: string;
+          issued_at: string | null;
+          issuer: string | null;
+          name: string;
+          sort_order: number;
           updated_at: string;
         };
         Insert: {
-          id?: string;
-          name: string;
-          issuer?: string | null;
-          issued_at?: string | null;
-          credential_url?: string | null;
-          sort_order?: number;
           created_at?: string;
+          credential_url?: string | null;
+          id?: string;
+          issued_at?: string | null;
+          issuer?: string | null;
+          name: string;
+          sort_order?: number;
           updated_at?: string;
         };
         Update: {
-          id?: string;
-          name?: string;
-          issuer?: string | null;
-          issued_at?: string | null;
-          credential_url?: string | null;
-          sort_order?: number;
           created_at?: string;
+          credential_url?: string | null;
+          id?: string;
+          issued_at?: string | null;
+          issuer?: string | null;
+          name?: string;
+          sort_order?: number;
           updated_at?: string;
         };
         Relationships: [];
       };
       educations: {
         Row: {
+          created_at: string;
+          end_date: string | null;
           id: string;
           institution: string;
-          program_id: string;
           program_en: string | null;
-          start_date: string;
-          end_date: string | null;
+          program_id: string;
           sort_order: number;
-          created_at: string;
+          start_date: string;
           updated_at: string;
         };
         Insert: {
+          created_at?: string;
+          end_date?: string | null;
           id?: string;
           institution: string;
-          program_id: string;
           program_en?: string | null;
-          start_date: string;
-          end_date?: string | null;
+          program_id: string;
           sort_order?: number;
-          created_at?: string;
+          start_date: string;
           updated_at?: string;
         };
         Update: {
+          created_at?: string;
+          end_date?: string | null;
           id?: string;
           institution?: string;
-          program_id?: string;
           program_en?: string | null;
-          start_date?: string;
-          end_date?: string | null;
+          program_id?: string;
           sort_order?: number;
-          created_at?: string;
+          start_date?: string;
           updated_at?: string;
         };
         Relationships: [];
       };
       experiences: {
         Row: {
-          id: string;
           company: string;
-          position_id: string;
-          position_en: string | null;
-          location_id: string | null;
-          location_en: string | null;
-          start_date: string;
-          end_date: string | null;
-          highlights_id: string[];
-          highlights_en: string[] | null;
-          sort_order: number;
           created_at: string;
+          end_date: string | null;
+          highlights_en: string[] | null;
+          highlights_id: string[];
+          id: string;
+          location_en: string | null;
+          location_id: string | null;
+          position_en: string | null;
+          position_id: string;
+          sort_order: number;
+          start_date: string;
           updated_at: string;
         };
         Insert: {
-          id?: string;
           company: string;
-          position_id: string;
-          position_en?: string | null;
-          location_id?: string | null;
-          location_en?: string | null;
-          start_date: string;
-          end_date?: string | null;
-          highlights_id?: string[];
-          highlights_en?: string[] | null;
-          sort_order?: number;
           created_at?: string;
+          end_date?: string | null;
+          highlights_en?: string[] | null;
+          highlights_id?: string[];
+          id?: string;
+          location_en?: string | null;
+          location_id?: string | null;
+          position_en?: string | null;
+          position_id: string;
+          sort_order?: number;
+          start_date: string;
           updated_at?: string;
         };
         Update: {
-          id?: string;
           company?: string;
-          position_id?: string;
-          position_en?: string | null;
-          location_id?: string | null;
-          location_en?: string | null;
-          start_date?: string;
-          end_date?: string | null;
-          highlights_id?: string[];
-          highlights_en?: string[] | null;
-          sort_order?: number;
           created_at?: string;
+          end_date?: string | null;
+          highlights_en?: string[] | null;
+          highlights_id?: string[];
+          id?: string;
+          location_en?: string | null;
+          location_id?: string | null;
+          position_en?: string | null;
+          position_id?: string;
+          sort_order?: number;
+          start_date?: string;
           updated_at?: string;
         };
         Relationships: [];
       };
       messages: {
         Row: {
-          id: string;
-          name: string;
-          email: string;
-          message: string;
-          is_read: boolean;
           created_at: string;
+          email: string;
+          id: string;
+          is_read: boolean;
+          message: string;
+          name: string;
         };
         Insert: {
-          id?: string;
-          name: string;
-          email: string;
-          message: string;
-          is_read?: boolean;
           created_at?: string;
+          email: string;
+          id?: string;
+          is_read?: boolean;
+          message: string;
+          name: string;
         };
         Update: {
-          id?: string;
-          name?: string;
-          email?: string;
-          message?: string;
-          is_read?: boolean;
           created_at?: string;
+          email?: string;
+          id?: string;
+          is_read?: boolean;
+          message?: string;
+          name?: string;
         };
         Relationships: [];
       };
       posts: {
         Row: {
-          id: string;
-          title_id: string;
-          title_en: string | null;
-          slug: string;
-          excerpt_id: string | null;
-          excerpt_en: string | null;
-          content_id: string;
           content_en: string | null;
+          content_id: string;
           cover_url: string | null;
+          created_at: string;
+          excerpt_en: string | null;
+          excerpt_id: string | null;
+          id: string;
           published: boolean;
           published_at: string | null;
-          created_at: string;
+          slug: string;
+          title_en: string | null;
+          title_id: string;
           updated_at: string;
         };
         Insert: {
-          id?: string;
-          title_id: string;
-          title_en?: string | null;
-          slug: string;
-          excerpt_id?: string | null;
-          excerpt_en?: string | null;
-          content_id?: string;
           content_en?: string | null;
+          content_id?: string;
           cover_url?: string | null;
+          created_at?: string;
+          excerpt_en?: string | null;
+          excerpt_id?: string | null;
+          id?: string;
           published?: boolean;
           published_at?: string | null;
-          created_at?: string;
+          slug: string;
+          title_en?: string | null;
+          title_id: string;
           updated_at?: string;
         };
         Update: {
-          id?: string;
-          title_id?: string;
-          title_en?: string | null;
-          slug?: string;
-          excerpt_id?: string | null;
-          excerpt_en?: string | null;
-          content_id?: string;
           content_en?: string | null;
+          content_id?: string;
           cover_url?: string | null;
+          created_at?: string;
+          excerpt_en?: string | null;
+          excerpt_id?: string | null;
+          id?: string;
           published?: boolean;
           published_at?: string | null;
-          created_at?: string;
+          slug?: string;
+          title_en?: string | null;
+          title_id?: string;
           updated_at?: string;
         };
         Relationships: [];
       };
       profile: {
         Row: {
-          id: string;
-          singleton: boolean;
-          name: string;
-          role_titles_id: string[];
-          role_titles_en: string[] | null;
-          bio_id: string;
-          bio_en: string | null;
-          about_id: string | null;
           about_en: string | null;
-          location_id: string | null;
-          location_en: string | null;
-          hero_photo_url: string | null;
+          about_id: string | null;
+          bio_en: string | null;
+          bio_id: string;
+          created_at: string;
           cv_url: string | null;
           email: string | null;
           github_url: string | null;
-          linkedin_url: string | null;
+          hero_photo_url: string | null;
+          id: string;
           instagram_url: string | null;
-          created_at: string;
+          linkedin_url: string | null;
+          location_en: string | null;
+          location_id: string | null;
+          name: string;
+          role_titles_en: string[] | null;
+          role_titles_id: string[];
+          singleton: boolean;
           updated_at: string;
         };
         Insert: {
-          id?: string;
-          singleton?: boolean;
-          name: string;
-          role_titles_id?: string[];
-          role_titles_en?: string[] | null;
-          bio_id: string;
-          bio_en?: string | null;
-          about_id?: string | null;
           about_en?: string | null;
-          location_id?: string | null;
-          location_en?: string | null;
-          hero_photo_url?: string | null;
+          about_id?: string | null;
+          bio_en?: string | null;
+          bio_id: string;
+          created_at?: string;
           cv_url?: string | null;
           email?: string | null;
           github_url?: string | null;
-          linkedin_url?: string | null;
+          hero_photo_url?: string | null;
+          id?: string;
           instagram_url?: string | null;
-          created_at?: string;
+          linkedin_url?: string | null;
+          location_en?: string | null;
+          location_id?: string | null;
+          name: string;
+          role_titles_en?: string[] | null;
+          role_titles_id?: string[];
+          singleton?: boolean;
           updated_at?: string;
         };
         Update: {
-          id?: string;
-          singleton?: boolean;
-          name?: string;
-          role_titles_id?: string[];
-          role_titles_en?: string[] | null;
-          bio_id?: string;
-          bio_en?: string | null;
-          about_id?: string | null;
           about_en?: string | null;
-          location_id?: string | null;
-          location_en?: string | null;
-          hero_photo_url?: string | null;
+          about_id?: string | null;
+          bio_en?: string | null;
+          bio_id?: string;
+          created_at?: string;
           cv_url?: string | null;
           email?: string | null;
           github_url?: string | null;
-          linkedin_url?: string | null;
+          hero_photo_url?: string | null;
+          id?: string;
           instagram_url?: string | null;
-          created_at?: string;
+          linkedin_url?: string | null;
+          location_en?: string | null;
+          location_id?: string | null;
+          name?: string;
+          role_titles_en?: string[] | null;
+          role_titles_id?: string[];
+          singleton?: boolean;
           updated_at?: string;
         };
         Relationships: [];
       };
       projects: {
         Row: {
-          id: string;
-          title_id: string;
-          title_en: string | null;
-          slug: string;
-          summary_id: string;
-          summary_en: string | null;
-          problem_id: string | null;
-          problem_en: string | null;
-          solution_id: string | null;
-          solution_en: string | null;
-          role_id: string | null;
-          role_en: string | null;
-          thumbnail_url: string | null;
-          gallery: string[];
-          tech_stack: string[];
-          demo_url: string | null;
-          github_url: string | null;
           category_id: string | null;
-          featured: boolean;
-          sort_order: number;
-          published: boolean;
           created_at: string;
+          demo_url: string | null;
+          featured: boolean;
+          gallery: string[];
+          github_url: string | null;
+          id: string;
+          problem_en: string | null;
+          problem_id: string | null;
+          published: boolean;
+          role_en: string | null;
+          role_id: string | null;
+          slug: string;
+          solution_en: string | null;
+          solution_id: string | null;
+          sort_order: number;
+          summary_en: string | null;
+          summary_id: string;
+          tech_stack: string[];
+          thumbnail_url: string | null;
+          title_en: string | null;
+          title_id: string;
           updated_at: string;
         };
         Insert: {
-          id?: string;
-          title_id: string;
-          title_en?: string | null;
-          slug: string;
-          summary_id: string;
-          summary_en?: string | null;
-          problem_id?: string | null;
-          problem_en?: string | null;
-          solution_id?: string | null;
-          solution_en?: string | null;
-          role_id?: string | null;
-          role_en?: string | null;
-          thumbnail_url?: string | null;
-          gallery?: string[];
-          tech_stack?: string[];
-          demo_url?: string | null;
-          github_url?: string | null;
           category_id?: string | null;
-          featured?: boolean;
-          sort_order?: number;
-          published?: boolean;
           created_at?: string;
+          demo_url?: string | null;
+          featured?: boolean;
+          gallery?: string[];
+          github_url?: string | null;
+          id?: string;
+          problem_en?: string | null;
+          problem_id?: string | null;
+          published?: boolean;
+          role_en?: string | null;
+          role_id?: string | null;
+          slug: string;
+          solution_en?: string | null;
+          solution_id?: string | null;
+          sort_order?: number;
+          summary_en?: string | null;
+          summary_id: string;
+          tech_stack?: string[];
+          thumbnail_url?: string | null;
+          title_en?: string | null;
+          title_id: string;
           updated_at?: string;
         };
         Update: {
-          id?: string;
-          title_id?: string;
-          title_en?: string | null;
-          slug?: string;
-          summary_id?: string;
-          summary_en?: string | null;
-          problem_id?: string | null;
-          problem_en?: string | null;
-          solution_id?: string | null;
-          solution_en?: string | null;
-          role_id?: string | null;
-          role_en?: string | null;
-          thumbnail_url?: string | null;
-          gallery?: string[];
-          tech_stack?: string[];
-          demo_url?: string | null;
-          github_url?: string | null;
           category_id?: string | null;
-          featured?: boolean;
-          sort_order?: number;
-          published?: boolean;
           created_at?: string;
+          demo_url?: string | null;
+          featured?: boolean;
+          gallery?: string[];
+          github_url?: string | null;
+          id?: string;
+          problem_en?: string | null;
+          problem_id?: string | null;
+          published?: boolean;
+          role_en?: string | null;
+          role_id?: string | null;
+          slug?: string;
+          solution_en?: string | null;
+          solution_id?: string | null;
+          sort_order?: number;
+          summary_en?: string | null;
+          summary_id?: string;
+          tech_stack?: string[];
+          thumbnail_url?: string | null;
+          title_en?: string | null;
+          title_id?: string;
           updated_at?: string;
         };
         Relationships: [
@@ -402,105 +405,105 @@ export type Database = {
       };
       services: {
         Row: {
-          id: string;
-          title_id: string;
-          title_en: string | null;
-          icon: string | null;
-          description_id: string;
-          description_en: string | null;
-          sort_order: number;
           created_at: string;
+          description_en: string | null;
+          description_id: string;
+          icon: string | null;
+          id: string;
+          sort_order: number;
+          title_en: string | null;
+          title_id: string;
           updated_at: string;
         };
         Insert: {
-          id?: string;
-          title_id: string;
-          title_en?: string | null;
-          icon?: string | null;
-          description_id: string;
-          description_en?: string | null;
-          sort_order?: number;
           created_at?: string;
+          description_en?: string | null;
+          description_id: string;
+          icon?: string | null;
+          id?: string;
+          sort_order?: number;
+          title_en?: string | null;
+          title_id: string;
           updated_at?: string;
         };
         Update: {
-          id?: string;
-          title_id?: string;
-          title_en?: string | null;
-          icon?: string | null;
-          description_id?: string;
-          description_en?: string | null;
-          sort_order?: number;
           created_at?: string;
+          description_en?: string | null;
+          description_id?: string;
+          icon?: string | null;
+          id?: string;
+          sort_order?: number;
+          title_en?: string | null;
+          title_id?: string;
           updated_at?: string;
         };
         Relationships: [];
       };
       skills: {
         Row: {
-          id: string;
-          name_id: string;
-          name_en: string | null;
-          icon: string | null;
-          group_name: string;
-          sort_order: number;
           created_at: string;
+          group_name: string;
+          icon: string | null;
+          id: string;
+          name_en: string | null;
+          name_id: string;
+          sort_order: number;
           updated_at: string;
         };
         Insert: {
-          id?: string;
-          name_id: string;
-          name_en?: string | null;
-          icon?: string | null;
-          group_name?: string;
-          sort_order?: number;
           created_at?: string;
+          group_name?: string;
+          icon?: string | null;
+          id?: string;
+          name_en?: string | null;
+          name_id: string;
+          sort_order?: number;
           updated_at?: string;
         };
         Update: {
-          id?: string;
-          name_id?: string;
-          name_en?: string | null;
-          icon?: string | null;
-          group_name?: string;
-          sort_order?: number;
           created_at?: string;
+          group_name?: string;
+          icon?: string | null;
+          id?: string;
+          name_en?: string | null;
+          name_id?: string;
+          sort_order?: number;
           updated_at?: string;
         };
         Relationships: [];
       };
       testimonials: {
         Row: {
+          created_at: string;
           id: string;
           name: string;
-          role: string | null;
           photo_url: string | null;
-          quote_id: string;
           quote_en: string | null;
+          quote_id: string;
+          role: string | null;
           sort_order: number;
-          created_at: string;
           updated_at: string;
         };
         Insert: {
+          created_at?: string;
           id?: string;
           name: string;
-          role?: string | null;
           photo_url?: string | null;
-          quote_id: string;
           quote_en?: string | null;
+          quote_id: string;
+          role?: string | null;
           sort_order?: number;
-          created_at?: string;
           updated_at?: string;
         };
         Update: {
+          created_at?: string;
           id?: string;
           name?: string;
-          role?: string | null;
           photo_url?: string | null;
-          quote_id?: string;
           quote_en?: string | null;
+          quote_id?: string;
+          role?: string | null;
           sort_order?: number;
-          created_at?: string;
           updated_at?: string;
         };
         Relationships: [];
@@ -521,11 +524,125 @@ export type Database = {
   };
 };
 
-type DefaultSchema = Database["public"];
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
 
-export type Tables<T extends keyof DefaultSchema["Tables"]> =
-  DefaultSchema["Tables"][T]["Row"];
-export type TablesInsert<T extends keyof DefaultSchema["Tables"]> =
-  DefaultSchema["Tables"][T]["Insert"];
-export type TablesUpdate<T extends keyof DefaultSchema["Tables"]> =
-  DefaultSchema["Tables"][T]["Update"];
+type DefaultSchema = DatabaseWithoutInternals[Extract<
+  keyof Database,
+  "public"
+>];
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    keyof DefaultSchema["Enums"] | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never) = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never;
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never) = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never;
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const;
