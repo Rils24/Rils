@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import type { ReactNode } from "react";
 
 export function SectionHeader({
@@ -14,7 +15,7 @@ export function SectionHeader({
   as?: "h1" | "h2";
 }) {
   return (
-    <div className="mb-10 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between">
+    <Reveal className="mb-10 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between">
       <div className="max-w-2xl">
         <Heading
           id={id}
@@ -29,6 +30,6 @@ export function SectionHeader({
         {intro && <p className="mt-4 text-lg text-muted">{intro}</p>}
       </div>
       {action}
-    </div>
+    </Reveal>
   );
 }

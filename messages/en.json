@@ -81,7 +81,11 @@
     "credential": "View credential"
   },
   "Testimonials": {
-    "title": "What clients say"
+    "title": "What clients say",
+    "previous": "Previous testimonial",
+    "next": "Next testimonial",
+    "pause": "Pause auto-rotation",
+    "play": "Resume auto-rotation"
   },
   "Blog": {
     "title": "Blog",

@@ -5,6 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonClass } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { getProfile } from "@/lib/data";
+import { Magnetic } from "@/components/motion/magnetic";
 import { MobileMenu } from "./mobile-menu";
 import { NavLinks, type NavItem } from "./nav-links";
 
@@ -43,12 +44,14 @@ export async function Navbar() {
             <LocaleSwitcher />
           </div>
           <ThemeToggle />
-          <Link
-            href="/contact"
-            className={buttonClass("primary", "md", "max-[359px]:px-3")}
-          >
-            {t("hireMe")}
-          </Link>
+          <Magnetic strength={0.2}>
+            <Link
+              href="/contact"
+              className={buttonClass("primary", "md", "max-[359px]:px-3")}
+            >
+              {t("hireMe")}
+            </Link>
+          </Magnetic>
           <MobileMenu items={items} />
         </div>
       </Container>

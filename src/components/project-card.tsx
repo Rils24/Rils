@@ -42,13 +42,31 @@ export function ProjectCard({
 }) {
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors hover:border-foreground/30">
-      <div className="relative aspect-[16/10] border-b border-border">
-        <CoverImage
-          src={project.thumbnailUrl}
-          alt=""
-          placeholder={placeholder}
-          sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
-        />
+      <div className="relative aspect-[16/10] overflow-hidden border-b border-border">
+        {/* Zoom gambar saat hover (hanya transform). */}
+        <div className="absolute inset-0 transition-transform duration-500 ease-out motion-safe:group-hover:scale-105">
+          <CoverImage
+            src={project.thumbnailUrl}
+            alt=""
+            placeholder={placeholder}
+            sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
+          />
+        </div>
+        {/* Overlay judul + tech stack saat hover. Duplikat isi kartu, jadi
+            disembunyikan dari pembaca layar. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 flex flex-col justify-end bg-black/65 p-5 text-white opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
+        >
+          <p className="font-display text-lg leading-snug font-bold tracking-tight">
+            {project.title}
+          </p>
+          {project.techStack.length > 0 && (
+            <p className="mt-2 text-sm text-white/80">
+              {project.techStack.join(" · ")}
+            </p>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col p-6">

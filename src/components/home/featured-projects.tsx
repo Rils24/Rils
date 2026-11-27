@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProjectCard, toProjectCard } from "@/components/project-card";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
 import type { Project } from "@/lib/data";
@@ -26,16 +27,16 @@ export async function FeaturedProjects({ projects }: { projects: Project[] }) {
           intro={t("intro")}
           action={<SeeAll href="/projects" label={t("viewAll")} />}
         />
-        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <li key={project.id}>
+            <StaggerItem key={project.id}>
               <ProjectCard
                 project={toProjectCard(project, locale)}
                 placeholder={common("imageComingSoon")}
               />
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
       </Container>
     </section>
   );

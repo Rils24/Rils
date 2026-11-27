@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { PostCard } from "@/components/post-card";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
 import type { Post } from "@/lib/data";
@@ -20,13 +21,13 @@ export async function LatestPosts({ posts }: { posts: Post[] }) {
           title={t("latest")}
           action={<SeeAll href="/blog" label={t("viewAll")} />}
         />
-        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <li key={post.id}>
+            <StaggerItem key={post.id}>
               <PostCard post={post} />
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
       </Container>
     </section>
   );

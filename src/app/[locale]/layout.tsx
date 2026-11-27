@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { locale as rootLocale } from "next/root-params";
+import { MotionProvider } from "@/components/motion/motion-provider";
 import { Footer } from "@/components/site/footer";
 import { Navbar } from "@/components/site/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -66,11 +67,13 @@ export default async function LocaleLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider>
-            <Navbar />
-            <main id="main" className="flex-1">
-              {children}
-            </main>
-            <Footer />
+            <MotionProvider>
+              <Navbar />
+              <main id="main" className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </MotionProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

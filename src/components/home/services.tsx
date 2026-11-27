@@ -6,6 +6,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
 import { localized } from "@/lib/content";
@@ -32,15 +33,15 @@ export async function Services({ services }: { services: Service[] }) {
     >
       <Container>
         <SectionHeader id="services" title={t("title")} intro={t("intro")} />
-        <ul className="grid gap-4 md:grid-cols-3">
+        <Stagger className="grid gap-4 md:grid-cols-3">
           {services.map((service) => {
             const Icon = (service.icon && ICONS[service.icon]) || Layers;
             return (
-              <li
+              <StaggerItem
                 key={service.id}
-                className="flex flex-col rounded-2xl border border-border bg-surface p-6 sm:p-8"
+                className="group flex flex-col rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-foreground/30 sm:p-8"
               >
-                <span className="inline-flex size-11 items-center justify-center rounded-xl border border-border text-accent">
+                <span className="inline-flex size-11 items-center justify-center rounded-xl border border-border text-accent transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1 motion-safe:group-hover:-rotate-6">
                   <Icon
                     aria-hidden="true"
                     className="size-5"
@@ -57,10 +58,10 @@ export async function Services({ services }: { services: Service[] }) {
                     service.description_en,
                   )}
                 </p>
-              </li>
+              </StaggerItem>
             );
           })}
-        </ul>
+        </Stagger>
       </Container>
     </section>
   );

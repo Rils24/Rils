@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
+import { Reveal } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import { localized } from "@/lib/content";
 import type { Certification, Education, Experience as Job } from "@/lib/data";
@@ -39,7 +40,7 @@ export async function Experience({
         </h2>
 
         <div className="grid gap-14 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+          <Reveal className="lg:col-span-7">
             <h3 className="text-sm font-semibold text-muted">{t("work")}</h3>
             <ol className="mt-6 border-l border-border">
               {experiences.map((job) => {
@@ -80,9 +81,12 @@ export async function Experience({
                 );
               })}
             </ol>
-          </div>
+          </Reveal>
 
-          <div className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9">
+          <Reveal
+            delay={0.15}
+            className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9"
+          >
             {educations.length > 0 && (
               <div>
                 <h3 className="text-sm font-semibold text-muted">
@@ -149,7 +153,7 @@ export async function Experience({
                 </ul>
               </div>
             )}
-          </div>
+          </Reveal>
         </div>
       </Container>
     </section>

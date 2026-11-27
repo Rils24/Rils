@@ -81,7 +81,11 @@
     "credential": "Lihat sertifikat"
   },
   "Testimonials": {
-    "title": "Kata klien"
+    "title": "Kata klien",
+    "previous": "Testimoni sebelumnya",
+    "next": "Testimoni berikutnya",
+    "pause": "Hentikan pergantian otomatis",
+    "play": "Lanjutkan pergantian otomatis"
   },
   "Blog": {
     "title": "Blog",
