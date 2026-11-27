@@ -18,6 +18,19 @@ npm run dev                         # http://localhost:3000 → diarahkan ke /id
 | `npm run typecheck` | Generate tipe route lalu cek TypeScript |
 | `npm run format` | Prettier (dengan urutan class Tailwind) |
 
+## Database (Supabase)
+
+Migrasi ada di `supabase/migrations/` (tabel dua bahasa, RLS, storage) dan data awal di `supabase/seed.sql`.
+
+```bash
+npx supabase login        # sekali, membuka browser
+npm run db:link           # sekali, meminta password database
+npm run db:push           # jalankan migrasi + seed ke proyek Supabase
+npm run db:types          # perbarui tipe TypeScript dari skema
+```
+
+Hak tulis hanya untuk user yang terdaftar di tabel `admin_users`.
+
 ## Struktur
 
 ```
@@ -27,6 +40,8 @@ src/i18n/                  Konfigurasi bahasa, navigasi, dan request config
 src/app/[locale]/          Halaman publik (root layout per bahasa)
 src/lib/supabase/          Klien Supabase: browser, server (sesi), public (cache), admin (service role)
 src/components/            Komponen bersama (tema, ganti bahasa)
+supabase/migrations/       Skema, RLS, dan bucket storage
+supabase/seed.sql          Data awal dari CONTENT.md
 ```
 
 ## Variabel lingkungan

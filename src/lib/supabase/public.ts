@@ -1,5 +1,6 @@
 import "server-only";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "./database.types";
 import { assertSupabaseEnv, supabasePublishableKey, supabaseUrl } from "./env";
 
 /**
@@ -9,7 +10,7 @@ import { assertSupabaseEnv, supabasePublishableKey, supabaseUrl } from "./env";
  */
 export function createPublicClient() {
   assertSupabaseEnv();
-  return createSupabaseClient(supabaseUrl, supabasePublishableKey, {
+  return createSupabaseClient<Database>(supabaseUrl, supabasePublishableKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }

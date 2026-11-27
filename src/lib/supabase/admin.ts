@@ -1,5 +1,6 @@
 import "server-only";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "./database.types";
 import { assertSupabaseEnv, supabaseUrl } from "./env";
 
 /**
@@ -13,7 +14,7 @@ export function createAdminClient() {
   if (!serviceRoleKey) {
     throw new Error("SUPABASE_SERVICE_ROLE_KEY belum diisi di .env.local.");
   }
-  return createSupabaseClient(supabaseUrl, serviceRoleKey, {
+  return createSupabaseClient<Database>(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
