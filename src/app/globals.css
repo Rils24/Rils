@@ -158,6 +158,27 @@
   background-size: 16px 16px;
 }
 
+/* Cahaya lembut di belakang potret hero tanpa bingkai (foto transparan). */
+.hero-head-glow {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent-secondary) 10%, transparent),
+    transparent
+  );
+}
+.dark .hero-head-glow {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent-secondary) 38%, transparent) 0%,
+    color-mix(in srgb, var(--accent-secondary) 12%, transparent) 55%,
+    transparent
+  );
+}
+/* Cahaya tepi tipis di dark mode agar siluet rambut & bahu tetap terbaca. */
+.dark .hero-portrait img {
+  filter: drop-shadow(0 0 1px rgba(160, 180, 255, 0.4));
+}
+
 /* Lenis (smooth scroll), disalin dari lenis/dist/lenis.css. */
 html.lenis,
 html.lenis body {

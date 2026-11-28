@@ -1,4 +1,5 @@
 import { ArrowUpRight, ChevronDown, Download, MapPin } from "lucide-react";
+import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import {
@@ -9,11 +10,13 @@ import {
 import { Magnetic } from "@/components/motion/magnetic";
 import { buttonClass } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { CoverImage } from "@/components/ui/cover-image";
 import { localized } from "@/lib/content";
 import type { Profile } from "@/lib/data";
 import { HeroName, LETTER_STEP, NAME_START } from "./hero-name";
 import { HeroTopoBg } from "./hero-topo-bg";
+
+/** Potret tanpa latar (WebP transparan, 3:4) agar menyatu di tema terang & gelap. */
+const HERO_PORTRAIT_SRC = "/images/hero-portrait.webp";
 
 /** Waktu (detik) saat animasi per huruf nama selesai; bagian lain menyusul. */
 function nameRevealEnd(name: string) {
@@ -21,10 +24,9 @@ function nameRevealEnd(name: string) {
 }
 
 export async function Hero({ profile }: { profile: Profile }) {
-  const [locale, t, common] = await Promise.all([
+  const [locale, t] = await Promise.all([
     getLocale(),
     getTranslations("Hero"),
-    getTranslations("Common"),
   ]);
   const roles = localized(
     locale,
@@ -40,20 +42,18 @@ export async function Hero({ profile }: { profile: Profile }) {
     <section
       id="hero"
       aria-labelledby="hero-name"
-      className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-24 lg:min-h-[86vh] lg:flex lg:items-center"
+      className="relative flex flex-col overflow-hidden border-b border-border pt-28 md:pt-32 lg:min-h-[88vh]"
     >
       <HeroTopoBg />
       <HeroParallax targetId="hero" />
 
-      <Container className="relative w-full">
-        {/* Panggung 3-kolom editorial ala referensi:
-            Kiri: Nama besar uppercase | Tengah: Potret | Kanan: Peran + CTA */}
-        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-6">
-          {/* Kolom Kiri — Lokasi & Nama Display */}
-          <div
-            data-parallax="name"
-            className="relative z-20 order-1 lg:col-span-4 lg:-mr-8"
-          >
+      <Container className="relative flex w-full flex-1 flex-col">
+        {/* Panggung 3-kolom editorial: proporsi kiri lebih lebar agar nama panjang
+            (mis. APRIALSYAH) selalu utuh satu baris tanpa pernah terpotong.
+            Potret berdiri di garis bawah hero (rata bawah), teks di tengah. */}
+        <div className="grid flex-1 items-center gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,0.95fr)] lg:gap-8">
+          {/* Kolom Kiri — Lokasi, Nama Display Utuh & Bio Singkat */}
+          <div data-parallax="name" className="relative z-20 order-1 lg:pb-16">
             {location && (
               <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-border/80 bg-surface/80 px-3.5 py-1.5 text-xs font-medium text-muted backdrop-blur-sm motion-safe:animate-fade-up">
                 <span
@@ -67,7 +67,7 @@ export async function Hero({ profile }: { profile: Profile }) {
 
             <h1
               id="hero-name"
-              className="font-display text-[clamp(2.9rem,8vw,4.85rem)] leading-[0.92] font-black tracking-[-0.03em] uppercase lg:text-[clamp(3rem,4.9vw,4.75rem)]"
+              className="font-display text-[clamp(2.25rem,7.2vw,3.85rem)] leading-[0.94] font-black tracking-[-0.03em] uppercase lg:text-[clamp(2.25rem,3.45vw,3.65rem)]"
             >
               <HeroName
                 lines={[
@@ -84,23 +84,38 @@ export async function Hero({ profile }: { profile: Profile }) {
               />
             </h1>
 
-            <p className="mt-6 max-w-sm text-base leading-relaxed text-muted motion-safe:animate-fade-up motion-safe:[animation-delay:280ms]">
+            <p className="mt-6 max-w-md text-sm leading-relaxed text-muted motion-safe:animate-fade-up motion-safe:[animation-delay:260ms] sm:text-base">
               {bio}
             </p>
+
+            {/* Penunjuk gulir halus */}
+            <a
+              href="#services"
+              className="group mt-8 hidden items-center gap-2 rounded-full border border-border/70 bg-surface/60 px-4 py-1.5 text-xs font-medium tracking-[0.12em] text-muted uppercase backdrop-blur-sm transition-colors hover:border-foreground/30 hover:text-foreground motion-safe:animate-fade-up motion-safe:[animation-delay:380ms] lg:inline-flex"
+            >
+              <span>{t("scrollCue")}</span>
+              <ChevronDown
+                aria-hidden="true"
+                className="size-3.5 text-accent transition-transform duration-300 group-hover:translate-y-0.5"
+              />
+            </a>
           </div>
 
-          {/* Kolom Tengah — Panggung Potret */}
+          {/* Kolom Tengah — potret berdiri di garis bawah hero. -mb-2: sedikit
+              melewati garis (dipotong overflow section) agar efek tilt tidak
+              pernah memperlihatkan celah di bawah lengan. */}
           <div
             data-parallax="photo"
-            className="relative z-10 order-2 mx-auto w-full max-w-[18.5rem] sm:max-w-[21rem] lg:col-span-4 lg:max-w-none"
+            className="relative z-10 order-3 mx-auto -mb-2 w-full max-w-[21rem] self-end sm:max-w-[25rem] lg:order-2 lg:-mx-[12%] lg:w-[124%] lg:max-w-none"
           >
-            <HeroPhoto delay={0.18}>
-              <CoverImage
-                src={profile.hero_photo_url}
+            <HeroPhoto delay={0.16}>
+              <Image
+                src={HERO_PORTRAIT_SRC}
                 alt={profile.name}
-                placeholder={common("photoComingSoon")}
-                sizes="(min-width: 1024px) 420px, 340px"
+                fill
+                sizes="(min-width: 1024px) 480px, (min-width: 640px) 400px, 336px"
                 priority
+                className="object-contain object-bottom"
               />
             </HeroPhoto>
           </div>
@@ -108,10 +123,10 @@ export async function Hero({ profile }: { profile: Profile }) {
           {/* Kolom Kanan — Peran Steel-Slate Uppercase & Tombol Pill CTA */}
           <div
             data-parallax="role"
-            className="relative z-20 order-3 flex flex-col items-start lg:col-span-4 lg:pl-6"
+            className="relative z-20 order-2 flex flex-col items-start lg:order-3 lg:pb-16 lg:pl-2"
           >
             {roles.length > 0 && (
-              <div className="w-full motion-safe:animate-fade-up motion-safe:[animation-delay:220ms]">
+              <div className="w-full motion-safe:animate-fade-up motion-safe:[animation-delay:200ms]">
                 <HeroRoles
                   roles={roles}
                   label={t("roles")}
@@ -120,7 +135,7 @@ export async function Hero({ profile }: { profile: Profile }) {
               </div>
             )}
 
-            <div className="mt-8 flex flex-wrap items-center gap-3 motion-safe:animate-fade-up motion-safe:[animation-delay:360ms]">
+            <div className="mt-7 flex flex-wrap items-center gap-3 motion-safe:animate-fade-up motion-safe:[animation-delay:320ms]">
               <Magnetic>
                 <Link href="/contact" className={buttonClass("primary", "lg")}>
                   {t("contact")}
@@ -141,20 +156,6 @@ export async function Hero({ profile }: { profile: Profile }) {
               )}
             </div>
           </div>
-        </div>
-
-        {/* Penunjuk gulir halus di bagian bawah hero */}
-        <div className="mt-14 hidden justify-center lg:flex">
-          <a
-            href="#services"
-            className="group inline-flex items-center gap-2 rounded-full border border-border/70 bg-surface/60 px-4 py-1.5 text-xs font-medium tracking-[0.12em] text-muted uppercase backdrop-blur-sm transition-colors hover:border-foreground/30 hover:text-foreground"
-          >
-            <span>{t("scrollCue")}</span>
-            <ChevronDown
-              aria-hidden="true"
-              className="size-3.5 text-accent transition-transform duration-300 group-hover:translate-y-0.5"
-            />
-          </a>
         </div>
       </Container>
     </section>

@@ -1,15 +1,19 @@
 "use client";
 
-import { m, useMotionValue, useSpring, useTransform } from "motion/react";
+import {
+  AnimatePresence,
+  m,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePointerEffects, usePrefersReducedMotion } from "./hooks";
 import { getLenis } from "./smooth-scroll";
 
 /* -------------------------------------------------------------------------- */
-/* Jabatan: tipografi display kanan bergaya editorial (ketik bergantian)      */
+/* Jabatan: transisi vertikal halus (selalu terbaca utuh, tidak pernah kosong)*/
 /* -------------------------------------------------------------------------- */
-
-type TypingState = { index: number; text: string; deleting: boolean };
 
 export function HeroRoles({
   roles,
@@ -21,52 +25,33 @@ export function HeroRoles({
   startDelay: number;
 }) {
   const reduced = usePrefersReducedMotion();
-  // Render awal (server) sudah berisi jabatan pertama secara utuh.
-  const [state, setState] = useState<TypingState>({
-    index: 0,
-    text: roles[0] ?? "",
-    deleting: false,
-  });
-  const [started, setStarted] = useState(false);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (reduced || roles.length < 2) return;
-    const id = setTimeout(() => setStarted(true), startDelay * 1000 + 1400);
-    return () => clearTimeout(id);
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+    const startId = setTimeout(
+      () => {
+        intervalId = setInterval(() => {
+          setIndex((i) => (i + 1) % roles.length);
+        }, 3200);
+      },
+      Math.max(1200, startDelay * 1000 + 800),
+    );
+    return () => {
+      clearTimeout(startId);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [reduced, roles.length, startDelay]);
 
-  useEffect(() => {
-    if (!started) return;
-    const full = roles[state.index];
-    let wait: number;
-    let next: TypingState;
+  const current = roles[index] ?? roles[0] ?? "";
+  const words = current.split(" ");
+  const firstLine = words[0] ?? "";
+  const restLines = words.slice(1).join(" ");
 
-    if (!state.deleting && state.text === full) {
-      wait = 2200; // jeda saat kata lengkap
-      next = { ...state, deleting: true };
-    } else if (state.deleting && state.text === "") {
-      wait = 260;
-      next = {
-        index: (state.index + 1) % roles.length,
-        text: "",
-        deleting: false,
-      };
-    } else if (state.deleting) {
-      wait = 32;
-      next = { ...state, text: state.text.slice(0, -1) };
-    } else {
-      wait = 68;
-      next = { ...state, text: full.slice(0, state.text.length + 1) };
-    }
-
-    const id = setTimeout(() => setState(next), wait);
-    return () => clearTimeout(id);
-  }, [started, state, roles]);
-
-  // prefers-reduced-motion: semua jabatan tampil statis.
   if (reduced || roles.length < 2) {
     return (
-      <p className="font-display text-2xl leading-[1.05] font-extrabold tracking-[-0.02em] text-role-tint uppercase sm:text-3xl lg:text-4xl">
+      <p className="font-display text-2xl leading-[1.02] font-extrabold tracking-[-0.02em] text-role-tint uppercase sm:text-3xl lg:text-[clamp(1.85rem,3vw,2.85rem)]">
         <span className="sr-only">{label}: </span>
         {roles.map((role, i) => (
           <span key={role} className={i > 0 ? "block opacity-75" : "block"}>
@@ -78,35 +63,40 @@ export function HeroRoles({
   }
 
   return (
-    <p className="font-display text-2xl leading-[1.05] font-extrabold tracking-[-0.02em] text-role-tint uppercase sm:text-3xl lg:text-[clamp(1.9rem,3.1vw,3rem)]">
+    <div className="min-h-[4.4rem] sm:min-h-[5.4rem] lg:min-h-[6.2rem]">
       <span className="sr-only">
         {label}: {roles.join(", ")}
       </span>
-      <span
-        aria-hidden="true"
-        className="inline-flex min-h-[2.2em] flex-wrap items-center"
-      >
-        <span>{state.text}</span>
-        <m.span
-          className="ml-1.5 inline-block h-[0.95em] w-[3px] rounded-full bg-accent"
-          animate={{ opacity: [1, 1, 0, 0] }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-        />
-      </span>
-    </p>
+      <AnimatePresence mode="wait" initial={false}>
+        <m.p
+          key={current}
+          aria-hidden="true"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -14 }}
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+          className="font-display text-2xl leading-[1.02] font-extrabold tracking-[-0.02em] text-role-tint uppercase sm:text-3xl lg:text-[clamp(1.85rem,3vw,2.85rem)]"
+        >
+          <span className="block">{firstLine}</span>
+          {restLines && <span className="block">{restLines}</span>}
+        </m.p>
+      </AnimatePresence>
+    </div>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-/* Foto: panggung potret tengah, reveal mask CSS, tilt 3D mengikuti kursor    */
+/* Foto: potret tanpa latar yang "keluar bingkai" — kepala melewati tepi atas */
+/* panggung, sisi bawah terpotong rapi mengikuti sudut kartu.                 */
 /* -------------------------------------------------------------------------- */
 
-const MAX_TILT = 6; // derajat halus agar tetap elegan
+const MAX_TILT = 5; // derajat halus agar tetap elegan
 
 export function HeroPhoto({
   children,
   delay,
 }: {
+  /** Gambar potret transparan (fill, object-contain, rata bawah). */
   children: ReactNode;
   delay: number;
 }) {
@@ -134,7 +124,7 @@ export function HeroPhoto({
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      if (rect.bottom < 0) return; // hero sudah lewat
+      if (rect.bottom < 0) return;
       const clamp = (v: number) => Math.max(-1, Math.min(1, v));
       px.set(
         clamp(
@@ -155,28 +145,31 @@ export function HeroPhoto({
     <div ref={ref} className="relative">
       <HeroBlob />
       <m.div
-        style={{ rotateX, rotateY, transformPerspective: 1100 }}
-        className="relative"
+        style={{
+          rotateX,
+          rotateY,
+          transformPerspective: 1100,
+          transformOrigin: "50% 100%",
+        }}
+        className="relative aspect-[3/4]"
       >
-        {/* Mask: isi naik dari bawah ke dalam bingkai (CSS, tanpa menunggu JS,
-            agar foto sebagai kandidat LCP tetap cepat tampil). */}
-        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-border/80 bg-surface-2 shadow-[0_32px_84px_-24px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.06]">
+        {/* Cahaya lembut di belakang kepala & bahu agar rambut dan kemeja
+            gelap tetap terpisah dari latar, terutama di dark mode. */}
+        <div
+          aria-hidden="true"
+          className="hero-head-glow pointer-events-none absolute top-[-4%] left-1/2 aspect-square w-[95%] -translate-x-1/2 rounded-full motion-safe:animate-fade-in"
+          style={{ animationDelay: `${delay}s` }}
+        />
+
+        {/* Potret tanpa bingkai, langsung di atas latar hero dan berdiri di
+            garis bawah section (tanpa pudar agar kemeja tetap hitam pekat). */}
+        <div className="absolute inset-0 overflow-hidden">
           <div
             className="absolute inset-0 motion-safe:animate-mask-up motion-reduce:animate-fade-in"
             style={{ animationDelay: `${delay}s` }}
           >
-            <div
-              className="absolute inset-0 motion-safe:animate-settle"
-              style={{ animationDelay: `${delay}s` }}
-            >
-              {children}
-            </div>
+            <div className="hero-portrait absolute inset-0">{children}</div>
           </div>
-          {/* Vignette bawah halus agar potret menyatu ke panggung gelap */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background/85 via-background/20 to-transparent"
-          />
         </div>
       </m.div>
     </div>
@@ -190,7 +183,7 @@ function HeroBlob() {
       className="pointer-events-none absolute -inset-12 -z-10"
     >
       <m.div
-        className="absolute -top-4 -right-4 size-3/4 rounded-full bg-[radial-gradient(circle,var(--accent-secondary)_0%,transparent_68%)] opacity-25 blur-3xl dark:opacity-30"
+        className="absolute -top-4 -right-4 size-3/4 rounded-full bg-[radial-gradient(circle,var(--accent-secondary)_0%,transparent_68%)] opacity-25 blur-3xl dark:opacity-35"
         animate={{
           x: [0, -24, 12, 0],
           y: [0, 18, -16, 0],
@@ -215,11 +208,6 @@ function HeroBlob() {
 /* Parallax multi-lapis saat scroll (GSAP ScrollTrigger, dimuat terpisah)     */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Menggerakkan lapisan hero ([data-parallax="bg|name|photo|role"]) dengan
- * kecepatan berbeda sesuai panduan ui-ux-pro-max. GSAP di-import dinamis agar
- * tidak masuk bundle awal, dan tidak dimuat sama sekali saat reduced motion.
- */
 export function HeroParallax({ targetId }: { targetId: string }) {
   const reduced = usePrefersReducedMotion();
 
@@ -252,17 +240,19 @@ export function HeroParallax({ targetId }: { targetId: string }) {
           scrollTrigger,
         });
         gsap.to('[data-parallax="name"]', {
-          y: 52,
+          y: 44,
           ease: "none",
           scrollTrigger,
         });
+        // Potret berdiri di garis bawah hero: hanya boleh turun (sisa yang
+        // melewati garis dipotong overflow section), jangan naik.
         gsap.to('[data-parallax="photo"]', {
-          y: -36,
+          y: 30,
           ease: "none",
           scrollTrigger,
         });
         gsap.to('[data-parallax="role"]', {
-          y: 42,
+          y: 38,
           ease: "none",
           scrollTrigger,
         });
