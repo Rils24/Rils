@@ -53,7 +53,7 @@ export function SocialLinks({
             {...(href.startsWith("http")
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
-            className="inline-flex size-10 items-center justify-center rounded-xl border border-border text-muted transition-colors hover:border-foreground/40 hover:text-foreground"
+            className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-surface/80 text-muted transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:text-foreground"
           >
             <Icon className="size-[18px]" />
           </a>

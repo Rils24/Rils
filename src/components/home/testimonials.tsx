@@ -29,11 +29,17 @@ export async function Testimonials({
 
   return (
     <section
+      id="testimonials-section"
       aria-labelledby="testimonials"
-      className="border-t border-border py-20 md:py-28"
+      className="border-t border-border/70 py-20 md:py-28"
     >
       <Container>
-        <SectionHeader id="testimonials" title={t("title")} />
+        <SectionHeader
+          id="testimonials"
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          align="center"
+        />
         <Reveal>
           <TestimonialSlider
             titleId="testimonials"

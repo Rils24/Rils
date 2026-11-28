@@ -5,37 +5,48 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Aksen merah dipecah tiga agar kontras lolos WCAG AA di kedua tema:
- * - accent       : #E63946 untuk elemen dekoratif/besar (garis, titik, border)
- * - accent-text  : teks merah kecil di atas latar/kartu
- * - accent-solid : latar tombol berteks putih (5,4:1)
+ * Palet dual-accent (Coral Red CTA + Cobalt Blue highlight) di atas kanvas
+ * charcoal gelap ala studio kreatif, tetap lolos kontras WCAG AA di kedua tema:
+ * - accent            : #F04452 untuk elemen dekoratif (garis, titik, underline)
+ * - accent-text       : teks aksen merah dengan kontras >= 4.5:1
+ * - accent-solid      : latar tombol pill berteks putih (>= 4.8:1)
+ * - accent-secondary  : #3B5BFF untuk badge ikon layanan, tanda kutip, sorotan kartu
+ * - role-tint         : warna steel-slate untuk judul peran di sisi kanan hero
  */
 :root {
-  --background: #f7f7f8;
+  --background: #f6f7fa;
   --surface: #ffffff;
-  --surface-2: #ececef;
-  --foreground: #111114;
-  --muted: #5b5b66;
-  --border: #e4e4e7;
-  --accent: #e63946;
-  --accent-text: #c92a37;
-  --accent-solid: #c92a37;
-  --accent-solid-hover: #ad1f2b;
+  --surface-2: #eceef4;
+  --foreground: #12141a;
+  --muted: #525a6b;
+  --border: #dfe3ec;
+  --accent: #ef3e4d;
+  --accent-text: #c22231;
+  --accent-solid: #d62d3c;
+  --accent-solid-hover: #b8212f;
   --accent-foreground: #ffffff;
+  --accent-secondary: #3454f5;
+  --accent-secondary-soft: rgba(52, 84, 245, 0.1);
+  --accent-secondary-text: #2744d6;
+  --role-tint: #4a5e7a;
 }
 
 .dark {
-  --background: #0f0f12;
-  --surface: #18181d;
-  --surface-2: #222228;
-  --foreground: #f2f2f4;
-  --muted: #a1a1aa;
-  --border: #2a2a31;
-  --accent: #e63946;
-  --accent-text: #f0525e;
-  --accent-solid: #c92a37;
-  --accent-solid-hover: #d8323f;
+  --background: #141519;
+  --surface: #1b1d24;
+  --surface-2: #242732;
+  --foreground: #f4f5f7;
+  --muted: #98a1b3;
+  --border: #2a2e3b;
+  --accent: #f24857;
+  --accent-text: #ff707c;
+  --accent-solid: #df3344;
+  --accent-solid-hover: #f24857;
   --accent-foreground: #ffffff;
+  --accent-secondary: #3b5bff;
+  --accent-secondary-soft: rgba(59, 91, 255, 0.16);
+  --accent-secondary-text: #7b96ff;
+  --role-tint: #8da2bd;
 }
 
 @theme inline {
@@ -50,15 +61,21 @@
   --color-accent-solid: var(--accent-solid);
   --color-accent-solid-hover: var(--accent-solid-hover);
   --color-accent-foreground: var(--accent-foreground);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-space-grotesk);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-secondary-soft: var(--accent-secondary-soft);
+  --color-accent-secondary-text: var(--accent-secondary-text);
+  --color-role-tint: var(--role-tint);
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-outfit);
+
   /* Animasi masuk di hero dibuat dengan CSS (bukan JS) agar tampil sejak cat
      pertama tanpa menunggu hydration — penting untuk LCP di HP. */
-  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-up: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-fade-in: fade-in 0.6s ease-out both;
-  --animate-letter-up: letter-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-mask-up: mask-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-settle: settle 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-letter-up: letter-up 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-word-up: letter-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-mask-up: mask-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-settle: settle 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 
   @keyframes fade-in {
     from {
@@ -68,7 +85,7 @@
   @keyframes letter-up {
     from {
       opacity: 0;
-      transform: translateY(105%);
+      transform: translateY(108%);
     }
   }
   @keyframes mask-up {
@@ -78,19 +95,67 @@
   }
   @keyframes settle {
     from {
-      transform: scale(1.15);
+      transform: scale(1.12);
     }
   }
   @keyframes fade-up {
     from {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(18px);
     }
     to {
       opacity: 1;
       transform: none;
     }
   }
+  @keyframes marquee-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  @keyframes topo-drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-1.5%, 1.5%, 0) scale(1.02);
+    }
+  }
+}
+
+/* Marquee pita teknologi: berjalan halus tanpa JS, berhenti saat hover. */
+.marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-scroll 34s linear infinite;
+}
+.group:hover .marquee {
+  animation-play-state: paused;
+}
+
+.topo-drift {
+  animation: topo-drift 22s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee,
+  .topo-drift {
+    animation: none;
+  }
+}
+
+/* Efek dot-grid dekoratif halus untuk banner CTA dan kartu editorial. */
+.bg-dot-grid {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--foreground) 18%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 16px 16px;
 }
 
 /* Lenis (smooth scroll), disalin dari lenis/dist/lenis.css. */

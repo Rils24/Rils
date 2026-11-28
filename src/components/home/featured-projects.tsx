@@ -1,42 +1,69 @@
 import { ArrowRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ProjectCard, toProjectCard } from "@/components/project-card";
-import { Stagger, StaggerItem } from "@/components/motion/reveal";
+import { toProjectCard } from "@/components/project-card";
+import { Magnetic } from "@/components/motion/magnetic";
+import { buttonClass } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
-import type { Project } from "@/lib/data";
+import { localized } from "@/lib/content";
+import type { Category, Project } from "@/lib/data";
+import { HomeProjectsShowcase } from "./home-projects-showcase";
 
-export async function FeaturedProjects({ projects }: { projects: Project[] }) {
+export async function FeaturedProjects({
+  projects,
+  categories = [],
+}: {
+  projects: Project[];
+  categories?: Category[];
+}) {
   if (!projects.length) return null;
-  const [locale, t, common] = await Promise.all([
+  const [locale, t] = await Promise.all([
     getLocale(),
     getTranslations("Projects"),
-    getTranslations("Common"),
   ]);
+
+  const usedCategories = categories
+    .filter((c) => projects.some((p) => p.category_id === c.id))
+    .map((c) => ({
+      slug: c.slug,
+      name: localized(locale, c.name_id, c.name_en),
+    }));
 
   return (
     <section
+      id="projects"
       aria-labelledby="featured"
-      className="border-t border-border py-20 md:py-28"
+      className="py-20 md:py-28"
     >
       <Container>
         <SectionHeader
           id="featured"
+          eyebrow={t("eyebrow")}
           title={t("featured")}
           intro={t("intro")}
-          action={<SeeAll href="/projects" label={t("viewAll")} />}
+          align="center"
         />
-        <Stagger className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <StaggerItem key={project.id}>
-              <ProjectCard
-                project={toProjectCard(project, locale)}
-                placeholder={common("imageComingSoon")}
+
+        <HomeProjectsShowcase
+          projects={projects.map((p) => toProjectCard(p, locale))}
+          categories={usedCategories}
+        />
+
+        <div className="mt-12 flex justify-center">
+          <Magnetic strength={0.2}>
+            <Link
+              href="/projects"
+              className={buttonClass("secondary", "lg", "group")}
+            >
+              {t("viewAll")}
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover:translate-x-1"
               />
-            </StaggerItem>
-          ))}
-        </Stagger>
+            </Link>
+          </Magnetic>
+        </div>
       </Container>
     </section>
   );
@@ -52,10 +79,13 @@ export function SeeAll({
   return (
     <Link
       href={href}
-      className="group inline-flex shrink-0 items-center gap-2 font-medium text-foreground hover:text-accent-text"
+      className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-accent-text"
     >
       {label}
-      <ArrowRight aria-hidden="true" className="size-4" />
+      <ArrowRight
+        aria-hidden="true"
+        className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+      />
     </Link>
   );
 }

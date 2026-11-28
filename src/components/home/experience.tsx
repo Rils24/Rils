@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
+import { SectionHeader } from "@/components/ui/section-header";
 import { localized } from "@/lib/content";
 import type { Certification, Education, Experience as Job } from "@/lib/data";
 
@@ -28,21 +29,23 @@ export async function Experience({
 
   return (
     <section
-      aria-labelledby="experience"
-      className="border-t border-border py-20 md:py-28"
+      id="experience"
+      aria-labelledby="experience-heading"
+      className="border-t border-border/70 py-20 md:py-28"
     >
       <Container>
-        <h2
-          id="experience"
-          className="mb-10 font-display text-3xl font-bold tracking-tight sm:text-5xl md:mb-14"
-        >
-          {t("title")}
-        </h2>
+        <SectionHeader
+          id="experience-heading"
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+        />
 
-        <div className="grid gap-14 lg:grid-cols-12">
+        <div className="grid gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <h3 className="text-sm font-semibold text-muted">{t("work")}</h3>
-            <ol className="mt-6 border-l border-border">
+            <h3 className="text-xs font-semibold tracking-[0.16em] text-muted uppercase">
+              {t("work")}
+            </h3>
+            <ol className="mt-6 border-l border-border/90">
               {experiences.map((job) => {
                 const location = localized(
                   locale,
@@ -55,28 +58,30 @@ export async function Experience({
                   job.highlights_en,
                 );
                 return (
-                  <li key={job.id} className="relative pb-12 pl-8 last:pb-0">
+                  <li key={job.id} className="relative pb-8 pl-7 last:pb-0">
                     <span
                       aria-hidden="true"
-                      className="absolute top-2 -left-[5px] size-[9px] rounded-full bg-accent"
+                      className="absolute top-6 -left-[5px] size-[9px] rounded-full bg-accent ring-4 ring-accent/20"
                     />
-                    <p className="text-sm text-muted tabular-nums">
-                      {period(job.start_date, job.end_date)}
-                    </p>
-                    <h4 className="mt-1 font-display text-xl font-bold tracking-tight">
-                      {localized(locale, job.position_id, job.position_en)}
-                    </h4>
-                    <p className="mt-1 text-muted">
-                      {job.company}
-                      {location && <span> · {location}</span>}
-                    </p>
-                    {highlights.length > 0 && (
-                      <ul className="mt-4 flex list-disc flex-col gap-2 pl-5 text-foreground/85 marker:text-muted">
-                        {highlights.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    )}
+                    <div className="rounded-2xl border border-border/90 bg-surface/95 p-6 transition-colors hover:border-accent-secondary/45">
+                      <p className="text-xs font-semibold tracking-wider text-accent-secondary-text uppercase tabular-nums">
+                        {period(job.start_date, job.end_date)}
+                      </p>
+                      <h4 className="mt-1.5 font-display text-xl font-bold tracking-tight">
+                        {localized(locale, job.position_id, job.position_en)}
+                      </h4>
+                      <p className="mt-1 text-sm text-muted">
+                        {job.company}
+                        {location && <span> · {location}</span>}
+                      </p>
+                      {highlights.length > 0 && (
+                        <ul className="mt-4 flex list-disc flex-col gap-2 pl-5 text-sm leading-relaxed text-foreground/85 marker:text-accent">
+                          {highlights.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
                   </li>
                 );
               })}
@@ -84,27 +89,27 @@ export async function Experience({
           </Reveal>
 
           <Reveal
-            delay={0.15}
-            className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9"
+            delay={0.12}
+            className="flex flex-col gap-10 lg:col-span-5"
           >
             {educations.length > 0 && (
               <div>
-                <h3 className="text-sm font-semibold text-muted">
+                <h3 className="text-xs font-semibold tracking-[0.16em] text-muted uppercase">
                   {t("education")}
                 </h3>
                 <ul className="mt-6 flex flex-col gap-4">
                   {educations.map((edu) => (
                     <li
                       key={edu.id}
-                      className="rounded-2xl border border-border bg-surface p-6"
+                      className="rounded-2xl border border-border/90 bg-surface/95 p-6 transition-colors hover:border-accent-secondary/45"
                     >
-                      <p className="text-sm text-muted tabular-nums">
+                      <p className="text-xs font-semibold tracking-wider text-accent-secondary-text uppercase tabular-nums">
                         {period(edu.start_date, edu.end_date)}
                       </p>
-                      <h4 className="mt-1 font-display text-lg font-bold tracking-tight">
+                      <h4 className="mt-1.5 font-display text-lg font-bold tracking-tight">
                         {edu.institution}
                       </h4>
-                      <p className="mt-1 text-muted">
+                      <p className="mt-1 text-sm text-muted">
                         {localized(locale, edu.program_id, edu.program_en)}
                       </p>
                     </li>
@@ -115,19 +120,19 @@ export async function Experience({
 
             {certifications.length > 0 && (
               <div>
-                <h3 className="text-sm font-semibold text-muted">
+                <h3 className="text-xs font-semibold tracking-[0.16em] text-muted uppercase">
                   {t("certifications")}
                 </h3>
-                <ul className="mt-6 divide-y divide-border border-y border-border">
+                <ul className="mt-6 flex flex-col gap-3">
                   {certifications.map((cert) => (
                     <li
                       key={cert.id}
-                      className="flex items-start justify-between gap-4 py-4"
+                      className="flex items-start justify-between gap-4 rounded-2xl border border-border/90 bg-surface/95 p-5 transition-colors hover:border-accent-secondary/45"
                     >
                       <div>
-                        <p className="font-medium">{cert.name}</p>
+                        <p className="text-sm font-semibold">{cert.name}</p>
                         {(cert.issuer || cert.issued_at) && (
-                          <p className="mt-0.5 text-sm text-muted">
+                          <p className="mt-1 text-xs text-muted">
                             {[
                               cert.issuer,
                               cert.issued_at && month(cert.issued_at),
@@ -143,9 +148,9 @@ export async function Experience({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${t("credential")}: ${cert.name}`}
-                          className="shrink-0 text-muted hover:text-foreground"
+                          className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-accent hover:text-accent"
                         >
-                          <ArrowUpRight aria-hidden="true" className="size-5" />
+                          <ArrowUpRight aria-hidden="true" className="size-4" />
                         </a>
                       )}
                     </li>

@@ -30,11 +30,16 @@
     "closeMenu": "Close menu"
   },
   "Hero": {
-    "contact": "Get in touch",
+    "contact": "Contact Me",
     "downloadCv": "Download CV",
-    "roles": "Roles"
+    "roles": "Roles",
+    "scrollCue": "Scroll to explore"
+  },
+  "Skills": {
+    "label": "Tech stack and skills"
   },
   "About": {
+    "eyebrow": "About",
     "title": "About me",
     "skills": "Skills",
     "groups": {
@@ -45,12 +50,14 @@
     }
   },
   "Services": {
-    "title": "What I can do for you",
+    "eyebrow": "Services",
+    "title": "Why hire me for your next project?",
     "intro": "From gathering requirements to an app your team can actually use."
   },
   "Projects": {
+    "eyebrow": "Portfolio",
     "title": "Projects",
-    "featured": "Selected projects",
+    "featured": "All Creative Works, Selected Projects",
     "intro": "Systems I built with a language center, an Islamic boarding school, and a government agency.",
     "viewAll": "View all projects",
     "filterLabel": "Filter by category",
@@ -74,6 +81,7 @@
     "pending": "Case study details are being written."
   },
   "Experience": {
+    "eyebrow": "Journey",
     "title": "Experience",
     "work": "Work",
     "education": "Education",
@@ -81,6 +89,7 @@
     "credential": "View credential"
   },
   "Testimonials": {
+    "eyebrow": "Testimonials",
     "title": "What clients say",
     "previous": "Previous testimonial",
     "next": "Next testimonial",
@@ -88,8 +97,9 @@
     "play": "Resume auto-rotation"
   },
   "Blog": {
+    "eyebrow": "Journal",
     "title": "Blog",
-    "latest": "Latest writing",
+    "latest": "Latest from Blog",
     "intro": "Notes from projects and things I learned while building systems.",
     "viewAll": "All posts",
     "readingTime": "{minutes} min read",
@@ -100,9 +110,10 @@
     "copied": "Link copied"
   },
   "Cta": {
-    "title": "Have a system that needs building?",
+    "eyebrow": "Let's Connect",
+    "title": "Let's work together and build something remarkable",
     "body": "Tell me about your workflow and what you need. We'll find the right shape for the app.",
-    "button": "Start a conversation"
+    "button": "Contact Me"
   },
   "Contact": {
     "title": "Let's talk about your project",

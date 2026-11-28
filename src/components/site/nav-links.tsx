@@ -1,5 +1,6 @@
 "use client";
 
+import { m } from "motion/react";
 import { Link, usePathname } from "@/i18n/navigation";
 
 export type NavItem = {
@@ -26,7 +27,7 @@ export function NavLinks({
     <ul
       className={
         orientation === "horizontal"
-          ? "flex items-center gap-1"
+          ? "flex items-center gap-2"
           : "flex flex-col gap-1"
       }
     >
@@ -40,13 +41,21 @@ export function NavLinks({
               aria-current={active ? "page" : undefined}
               className={
                 orientation === "horizontal"
-                  ? "rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-foreground aria-[current=page]:text-foreground"
-                  : "block rounded-lg px-3 py-3 text-lg font-medium text-muted transition-colors hover:text-foreground aria-[current=page]:text-foreground"
+                  ? "relative inline-flex items-center rounded-full px-3.5 py-2 text-xs font-semibold tracking-[0.14em] text-muted uppercase transition-colors hover:text-foreground aria-[current=page]:text-foreground"
+                  : "block rounded-xl px-3 py-3 text-base font-semibold tracking-[0.08em] text-muted uppercase transition-colors hover:text-foreground aria-[current=page]:text-foreground"
               }
             >
               <span className="relative">
                 {item.label}
-                {active && (
+                {active && orientation === "horizontal" && (
+                  <m.span
+                    layoutId="nav-active-underline"
+                    aria-hidden="true"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    className="absolute inset-x-0 -bottom-2 h-[2px] rounded-full bg-accent"
+                  />
+                )}
+                {active && orientation === "vertical" && (
                   <span
                     aria-hidden="true"
                     className="absolute inset-x-0 -bottom-1.5 h-0.5 rounded-full bg-accent"

@@ -32,9 +32,14 @@
   "Hero": {
     "contact": "Hubungi saya",
     "downloadCv": "Unduh CV",
-    "roles": "Peran"
+    "roles": "Peran",
+    "scrollCue": "Gulir untuk menjelajah"
+  },
+  "Skills": {
+    "label": "Teknologi dan keahlian"
   },
   "About": {
+    "eyebrow": "Tentang",
     "title": "Tentang saya",
     "skills": "Keahlian",
     "groups": {
@@ -45,12 +50,14 @@
     }
   },
   "Services": {
-    "title": "Yang bisa saya kerjakan",
+    "eyebrow": "Layanan",
+    "title": "Mengapa memilih saya untuk proyek Anda?",
     "intro": "Dari menggali kebutuhan sampai aplikasi siap dipakai tim Anda."
   },
   "Projects": {
+    "eyebrow": "Portofolio",
     "title": "Proyek",
-    "featured": "Proyek pilihan",
+    "featured": "Karya Pilihan & Proyek Terbaik",
     "intro": "Sistem yang saya bangun bersama lembaga kursus, pondok pesantren, dan instansi pemerintah.",
     "viewAll": "Lihat semua proyek",
     "filterLabel": "Filter kategori",
@@ -74,6 +81,7 @@
     "pending": "Detail studi kasus sedang dilengkapi."
   },
   "Experience": {
+    "eyebrow": "Perjalanan",
     "title": "Pengalaman",
     "work": "Pekerjaan",
     "education": "Pendidikan",
@@ -81,6 +89,7 @@
     "credential": "Lihat sertifikat"
   },
   "Testimonials": {
+    "eyebrow": "Ulasan Klien",
     "title": "Kata klien",
     "previous": "Testimoni sebelumnya",
     "next": "Testimoni berikutnya",
@@ -88,6 +97,7 @@
     "play": "Lanjutkan pergantian otomatis"
   },
   "Blog": {
+    "eyebrow": "Blog & Catatan",
     "title": "Blog",
     "latest": "Tulisan terbaru",
     "intro": "Catatan dari proyek dan hal-hal yang saya pelajari selama membangun sistem.",
@@ -100,9 +110,10 @@
     "copied": "Tautan disalin"
   },
   "Cta": {
-    "title": "Punya sistem yang perlu dibangun?",
+    "eyebrow": "Kolaborasi",
+    "title": "Mari bekerja sama dan wujudkan sistem terbaik Anda",
     "body": "Ceritakan alur kerja dan kebutuhan Anda. Kita cari bentuk aplikasi yang paling pas.",
-    "button": "Mulai diskusi"
+    "button": "Hubungi saya"
   },
   "Contact": {
     "title": "Mari bicara tentang proyek Anda",

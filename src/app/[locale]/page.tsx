@@ -7,20 +7,23 @@ import { FeaturedProjects } from "@/components/home/featured-projects";
 import { Hero } from "@/components/home/hero";
 import { LatestPosts } from "@/components/home/latest-posts";
 import { Services } from "@/components/home/services";
+import { SkillMarquee } from "@/components/home/skill-marquee";
 import { Testimonials } from "@/components/home/testimonials";
 import { JsonLd } from "@/components/json-ld";
 import { localized } from "@/lib/content";
 import {
+  getCategories,
   getFeaturedProjects,
   getPosts,
   getProfile,
+  getProjects,
   getResume,
   getServices,
   getSkills,
   getTestimonials,
+  type Education,
   type Profile,
   type Skill,
-  type Education,
 } from "@/lib/data";
 import { pageMetadata, siteUrl } from "@/lib/seo";
 
@@ -106,6 +109,8 @@ export default async function HomePage() {
     profile,
     services,
     featured,
+    allProjects,
+    categories,
     skills,
     resume,
     testimonials,
@@ -115,11 +120,15 @@ export default async function HomePage() {
     getProfile(),
     getServices(),
     getFeaturedProjects(),
+    getProjects(),
+    getCategories(),
     getSkills(),
     getResume(),
     getTestimonials(),
     getPosts(),
   ]);
+
+  const showcaseProjects = featured.length ? featured : allProjects;
 
   return (
     <>
@@ -129,11 +138,12 @@ export default async function HomePage() {
         />
       )}
       {profile && <Hero profile={profile} />}
-      <Services services={services} />
-      <FeaturedProjects projects={featured} />
+      <Services services={services} profile={profile} />
+      <SkillMarquee skills={skills} />
+      <FeaturedProjects projects={showcaseProjects} categories={categories} />
+      <Testimonials testimonials={testimonials} />
       {profile && <About profile={profile} skills={skills} />}
       <Experience {...resume} />
-      <Testimonials testimonials={testimonials} />
       <LatestPosts posts={posts.slice(0, 3)} />
       <Cta email={profile?.email ?? null} />
     </>
